@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Tray, Menu } = require('electron/main')
 const path = require('path');
+const { startActivityWatch, getBuckets } = require('./aw');
 
 let win;
 let tray = null;
@@ -45,7 +46,12 @@ const createWindow = () => {
   });
 }
 
-app.whenReady().then(createWindow);
+getBuckets().then(buckets => console.log(buckets));
+
+app.whenReady().then(() => {
+  startActivityWatch();
+  createWindow();
+});
 
 // Ensures app stays running even with no windows visible
 app.on('window-all-closed', (event) => {
