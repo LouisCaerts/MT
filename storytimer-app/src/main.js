@@ -3,7 +3,8 @@ import path from 'node:path';
 import started from 'electron-squirrel-startup';
 
 let mainWindow;
-let mainTray = null;
+let mainTray;
+const mainTrayIcon = nativeImage.createFromDataURL('data:image/png;base64,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');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -11,9 +12,6 @@ if (started) {
 }
 
 const createWindow = () => {
-  // Load app icon
-  const appIcon = nativeImage.createFromPath('./src/images/icon.png');
-
   // Get screen size to display app in bottom left
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
@@ -29,7 +27,7 @@ const createWindow = () => {
     x: x,
     y: y,
     alwaysOnTop: true,
-    icon: appIcon,
+    icon: './src/images/icon.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -44,15 +42,8 @@ const createWindow = () => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
-
-  // hide app on close instead of exiting
-  mainWindow.on('close', (event) => {
-    event.preventDefault();
-    mainWindow.hide();
-  });
   
   // Setup the tray icon
-  const mainTrayIcon = nativeImage.createFromPath('./src/images/icon.png');
   mainTray = new Tray(mainTrayIcon);
 
   const contextMenu = Menu.buildFromTemplate([
@@ -102,13 +93,8 @@ app.whenReady().then(() => {
   });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// Keep app alive when window is closed
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
 });
 
 // In this file you can include the rest of your app's specific main process
