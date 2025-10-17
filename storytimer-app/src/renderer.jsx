@@ -4,6 +4,7 @@ import Profile from './components/Profile';
 const App = () =>{
     return (
         <>
+        <h1>Hello!</h1>
         <Profile />
         </>
     )
