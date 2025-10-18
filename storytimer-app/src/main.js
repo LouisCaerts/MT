@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeImage, Tray, Menu, screen } from 'electron';
+import { app, BrowserWindow, nativeImage, Tray, Menu, screen, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 
@@ -40,14 +40,33 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: appWindowWidth,
     height: appWindowHeight,
+    maxWidth: appWindowWidth,
+    maxHeight: appWindowHeight,
+    minWidth: appWindowWidth,
+    minHeight: appWindowHeight,
     x: x,
     y: y,
+
     alwaysOnTop: true,
     icon: './src/images/icon.png',
+
+    frame: false,
+    titleBarStyle: process.platform === "darwin" ? "hiddenInset" : "default",
+    titleBarOverlay: {
+      color: '#775892',
+      symbolColor: 'white'
+    },
+    
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-    },
+      contextIsolation: true,
+      nodeIntegration: false,
+    }
   });
+
+  ipcMain.on("win:minimize", () => mainWindow.minimize());
+  ipcMain.on("win:close", () => mainWindow.close());
+  ipcMain.handle("app:platform", () => process.platform);
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -62,7 +81,7 @@ const createWindow = () => {
   });
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   
   // Setup the tray icon
   mainTray = new Tray(mainTrayIcon);
