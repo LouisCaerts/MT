@@ -16,7 +16,7 @@ const App = () =>{
     return (
         <HashRouter>
             <Titlebar></Titlebar>
-            <h1>Hellooooooooooooooooo!</h1>
+            <h1>Helloooooooooooooo!</h1>
             <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/settings" element={<Settings />} />

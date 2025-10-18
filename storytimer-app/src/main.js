@@ -81,7 +81,7 @@ const createWindow = () => {
   });
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   
   // Setup the tray icon
   mainTray = new Tray(mainTrayIcon);

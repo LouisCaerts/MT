@@ -7,6 +7,20 @@ import { Route, Routes, Link } from "react-router-dom";
 
 export default function Titlebar() {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // if menu is open and click target is outside it, close
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    // listen for clicks anywhere on the document
+    document.addEventListener("mousedown", handleClickOutside);
+    // cleanup on unmount
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setOpen]);
 
   return (
     <div id="titleBarContainer">
@@ -26,11 +40,11 @@ export default function Titlebar() {
         </div>
       </div>
 
-      <div id="titleBarMenu" class="nonDraggable">
+      <div id="titleBarMenu" class="nonDraggable" ref={menuRef}>
         <Collapse isOpened={open}>
           <nav id="hamburgerNav">
-            <div className="hamburgerLinkWrapper"><Link className="hamburgerLink" to="/home">Home</Link></div>
-            <div className="hamburgerLinkWrapper"><Link className="hamburgerLinkBottom" to="/settings">Settings</Link></div>
+            <div className="hamburgerLinkWrapper"><Link className="hamburgerLink" to="/home" onClick={() => setOpen(false)}>Home</Link></div>
+            <div className="hamburgerLinkWrapper"><Link className="hamburgerLinkBottom" to="/settings" onClick={() => setOpen(false)}>Settings</Link></div>
           </nav>
         </Collapse>
       </div>
