@@ -8,6 +8,7 @@ import Settings from "./routes/Settings.jsx";
 
 // components
 import Titlebar from './components/Titlebar.jsx';
+import Timer from './components/Timer.jsx';
 
 
 
@@ -16,11 +17,11 @@ const App = () =>{
     return (
         <HashRouter>
             <Titlebar></Titlebar>
-            <h1>Helloooooooooooooo!</h1>
             <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/settings" element={<Settings />} />
             </Routes>
+            <Timer duration={10} onComplete={() => console.log("done")} />
         </HashRouter>
     )
 };
