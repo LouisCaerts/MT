@@ -1,3 +1,13 @@
+import '../stylesheets/Home.css';
+
+import WeeklyProgress from '../components/WeeklyProgress';
+import DailyProgress from '../components/DailyProgress';
+
 export default function Home() {
-  return <h1>Welcome home!</h1>
+  return (
+    <div id="homeContainer">
+      <WeeklyProgress />
+      <DailyProgress />
+    </div>
+  )
 }

@@ -5,6 +5,7 @@ import { HashRouter, Route, Routes, Link } from "react-router-dom";
 // routes
 import Home from "./routes/Home.jsx";
 import Settings from "./routes/Settings.jsx";
+import Session from "./routes/Session.jsx";
 
 // components
 import Titlebar from './components/Titlebar.jsx';
@@ -19,9 +20,9 @@ const App = () =>{
             <Titlebar></Titlebar>
             <Routes>
                 <Route path="/home" element={<Home />} />
+                <Route path="/session" element={<Session />} />
                 <Route path="/settings" element={<Settings />} />
             </Routes>
-            <Timer duration={10} onComplete={() => console.log("done")} />
         </HashRouter>
     )
 };

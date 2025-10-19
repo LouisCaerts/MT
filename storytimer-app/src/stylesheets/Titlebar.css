@@ -28,8 +28,8 @@
   user-select: none;
   position: relative;
 
-  background: #775892;
-  color: white;
+  background: var(--color-theme-dark);
+  color: var(--color-theme-white);
 }
 
 #titleBarTitle {
@@ -57,8 +57,8 @@
   position: absolute;
   top: 100%;
 
-  background-color: #9f7ebc;
-  color: white;
+  background-color: var(--color-theme-normal);
+  color: var(--color-theme-white);
 }
 
 #titleBarMenu > .ReactCollapse--collapse {
@@ -69,14 +69,14 @@
   display: flex;
   flex-direction: column;
   
-  border-right: 2px solid #775892;
-  border-bottom: 2px solid #775892;
-  border-left: 2px solid #775892;
+  border-right: 2px solid var(--color-theme-dark);
+  border-bottom: 2px solid var(--color-theme-dark);
+  border-left: 2px solid var(--color-theme-dark);
 }
 
 .hamburgerLink {
   text-decoration: none;
-  color: white;
+  color: var(--color-theme-white);
   font-size: large;
   display: block;
   padding: 5px;
@@ -84,19 +84,19 @@
 
 .hamburgerLinkBottom {
   text-decoration: none;
-  color: white;
+  color: var(--color-theme-white);
   font-size: large;
   display: block;
   padding: 5px;
 }
 
 .hamburgerLinkWrapper {
-  border-bottom: 1px solid #775892;
+  border-bottom: 1px solid var(--color-theme-dark);
   transition: background-color 300ms ease;
 }
 
 .hamburgerLinkWrapper:hover {
-  background-color: #ab88ca;
+  background-color: var(--color-theme-light);
 }
 
 #titleBarStoplights {
@@ -112,9 +112,9 @@
 }
 
 .stoplightButton:hover {
-  background-color: #9f7ebc;
+  background-color: var(--color-theme-normal);
 }
 
 #stoplightMinimize {
-  border-right: 1px solid #9f7ebc;
+  border-right: 1px solid var(--color-theme-normal);
 }
