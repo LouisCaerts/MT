@@ -16,14 +16,13 @@
 }
 
 #titleBar {
-  position: absolute;
+  position: relative;
   top: 0;
   height: env(titlebar-area-height, var(--fallback-title-bar-height), 30px);
   left: env(titlebar-area-x, 0);
   width: env(titlebar-area-width, 100%);
   
   display: flex;
-  justify-content: space-between;
   align-items: center;
   text-align: center;
   user-select: none;
@@ -31,6 +30,13 @@
 
   background: #775892;
   color: white;
+}
+
+#titleBarTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 #titleBarHamburger {
@@ -91,6 +97,10 @@
 
 .hamburgerLinkWrapper:hover {
   background-color: #ab88ca;
+}
+
+#titleBarStoplights {
+  margin-left: auto;
 }
 
 .stoplightButton {

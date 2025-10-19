@@ -1,6 +1,7 @@
 import '../stylesheets/Timer.css';
 
 import { useEffect, useRef, useState } from "react";
+import { Play, Pause, RotateCcw } from "lucide-react";
 
 export default function Timer({ duration = 90,  autoStart = false, onComplete }) 
 {
@@ -111,13 +112,38 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
     const mm = Math.floor(timeLeft / 60000);
     const ss = Math.floor((timeLeft % 60000) / 1000).toString().padStart(2, "0");
 
+    // ring animation configuration
+    const RING_SIZE = 180;
+    const RING_STROKE = 10;
+
+    const radius = (RING_SIZE - RING_STROKE) / 2;
+    const circumference = 2 * Math.PI * radius;
+
+    const remainingFrac = Math.max(0, Math.min(1, timeLeft / Math.max(1, duration * 1000)));
+    const dashOffset = circumference * (1 - remainingFrac);
+
     return (
-        <div style={{ textAlign: "center", padding: 16 }}>
-        <div style={{ fontSize: 32, marginBottom: 8 }}>{mm}:{ss}</div>
-        <button onClick={start}>Start</button>{" "}
-        <button onClick={pause}>Pause</button>{" "}
-        <button onClick={resume}>Resume</button>{" "}
-        <button onClick={reset}>Reset</button>
+        <div className="timerContainer">
+            <div className="timerRingWrapper">
+                <svg className="timerRingSvg" width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
+                    <circle cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={radius} className="timerRingTrack" strokeWidth={RING_STROKE} />
+                    <circle cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={radius} className="timerRingProgress" strokeWidth={RING_STROKE} strokeDasharray={circumference} strokeDashoffset={dashOffset} transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`} />
+                </svg>
+                <div className="timerRingLabel" aria-live="polite">{mm}:{ss}</div>
+            </div>
+
+            <div className="timerControls">
+                {!isRunning && timeLeft === duration * 1000 && (
+                    <button onClick={start} className="timerButton"><Play size={20} /></button>
+                )}
+                {isRunning && (
+                    <button onClick={pause} className="timerButton"><Pause size={20} /></button>
+                )}
+                {!isRunning && timeLeft !== duration * 1000 && timeLeft > 0 && (
+                    <button onClick={resume} className="timerButton"><Play size={20} /></button>
+                )}
+                <button onClick={reset} className="timerButton"><RotateCcw size={20} /></button>
+            </div>
         </div>
     );
 }
