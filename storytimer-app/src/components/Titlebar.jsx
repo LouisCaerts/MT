@@ -45,7 +45,7 @@ export default function Titlebar() {
           <nav id="hamburgerNav">
             <div className="hamburgerLinkWrapper"><Link className="hamburgerLink" to="/home" onClick={() => setOpen(false)}>Home</Link></div>
             <div className="hamburgerLinkWrapper"><Link className="hamburgerLink" to="/session" onClick={() => setOpen(false)}>Session</Link></div>
-            <div className="hamburgerLinkWrapper"><Link className="hamburgerLinkBottom" to="/settings" onClick={() => setOpen(false)}>Settings</Link></div>
+            <div className="hamburgerLinkWrapper"><Link className="hamburgerLinkBottom" to="/preferences" onClick={() => setOpen(false)}>Preferences</Link></div>
           </nav>
         </Collapse>
       </div>

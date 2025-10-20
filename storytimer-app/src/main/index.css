@@ -13,6 +13,7 @@
   --color-theme-light: #b396cc;
   --color-theme-white: #fefdff;
   --color-theme-black: #0a0014;
+  --color-theme-secondary: #ddd1f6;
 
   background-color: var(--color-theme-white);
 }

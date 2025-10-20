@@ -1,0 +1,140 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+#preferencesFormContainer {
+    margin-top: 50px;
+    height: 100%;
+}
+
+#preferencesFormTitle {
+    color: var(--color-theme-black);
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+#preferencesFormSubtitle {
+    color: var(--color-theme-black);
+    font-size: large;
+    font-weight: bold;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+#preferencesFormLabelsContainer {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    gap: 5px;
+    margin-bottom: 35px;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.preferencesFormLabel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;;
+    color: var(--color-theme-black);
+}
+
+.preferencesFormInputSpan {
+    color: var(--color-theme-black);
+}
+
+.preferencesFormInputSpan > input {
+    color: var(--color-theme-black);
+    border: 1px solid var(--color-theme-secondary);
+    border-radius: 3px;
+}
+
+#preferencesFormButtonsContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#preferencesFormButtonBack {
+    background-color: var(--color-theme-normal);
+    color: var(--color-theme-white);
+    border: 1px solid var(--color-theme-black);
+    border-radius: 3px;
+    font-size: small;
+    font-weight: 450;
+    text-decoration: none;
+
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    cursor: pointer;
+
+    margin-right: 5px;
+}
+
+#preferencesFormButtonBack:hover {
+    opacity: 0.9;
+    transition: opacity 100ms ease;
+}
+
+#preferencesFormButtonSave {
+    background-color: var(--color-theme-dark);
+    color: var(--color-theme-white);
+    border: 1px solid var(--color-theme-black);
+    border-radius: 3px;
+    font-size: small;
+    font-weight: 450;
+
+    cursor: pointer;
+    
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+#preferencesFormButtonSave:hover {
+    opacity: 0.9;
+    transition: opacity 100ms ease;
+}
+
+.popupOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popupCard {
+    background: var(--color-theme-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 280px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    border: 1px solid var(--color-theme-black);
+}
+
+.popupButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.popupButtons > button {
+    border: 1px solid var(--color-theme-black);
+    border-radius: 5px;
+    background-color: var(--color-theme-white);
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.popupButtons > button:hover {
+    opacity: 0.8;
+    transition: opacity 100ms ease;
+}
