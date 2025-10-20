@@ -6,12 +6,16 @@
 .timerContainer {
   text-align: center;
   padding: 16px;
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 .timerRingWrapper {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 240px;
+  height: 240px;
   margin: 0 auto;
 }
 

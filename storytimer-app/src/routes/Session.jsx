@@ -21,9 +21,8 @@ export default function Home() {
 	}, []);
 
     return (
-      	<>
-			<h1>Welcome to your session!</h1>
+      	<div id="sessionContainer">
 			<Timer duration={length * 60} onComplete={() => console.log("done")} />
-      	</>
+      	</div>
     )
 }
