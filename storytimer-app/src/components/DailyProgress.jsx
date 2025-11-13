@@ -1,7 +1,7 @@
 import '../stylesheets/DailyProgress.css';
 
 import { Link } from "react-router-dom";
-import { Flag, Play } from "lucide-react";
+import { Play } from "lucide-react";
 
 export default function DailyProgress({ progress = 90, goal = 120 }) {
     const progressPercentage = Math.min(100, Math.round((progress / goal) * 100));

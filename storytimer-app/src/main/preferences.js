@@ -49,7 +49,7 @@ const preferences = new Store({
         sessionLength: {
             type: 'number',
             default: 30,
-            minimum: 5,
+            minimum: 1,
             maximum: 599
         }
     }

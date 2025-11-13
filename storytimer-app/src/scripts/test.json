@@ -1,0 +1,24 @@
+{
+  "id": "test",
+  "title": "Chapter 0: Test",
+  "start": "n1",
+  "nodes": {
+    "n1": { "type": "line", "speaker": "Chi", "text": "Oh, hello!", "side": "left", "avatar": "../images/avatars/chi_neutral.png", "next": "n2" },
+    "n2": { "type": "line", "speaker": "Chi", "text": "Nice to meet you! I am Chi!", "side": "left", "avatar": "../images/avatars/chi_happy.png", "next": "n3" },
+    "n3": { "type": "line", "speaker": "Chi", "text": "This narrative script is just a temporary one put into this app so that it can be tested on a different machine.", "side": "left", "avatar": "../images/avatars/chi_neutral.png", "next": "c1" },
+    "c1": {
+      "type": "choice",
+      "text": "It even supports choices, which formative interviews showed users liked! See?",
+      "speaker": "Chi",
+      "side": "left",
+      "avatar": "../images/avatars/chi_happy.png",
+      "choices": [
+        { "text": "Choice 1", "next": "n4" },
+        { "text": "Choice 2", "next": "n4" },
+        { "text": "Choice 3", "next": "n4" }
+      ]
+    },
+    "n4": { "type": "line", "speaker": "Chi", "text": "Other people that I talk to will appear here.", "side": "right", "avatar": "../images/avatars/chi_neutral.png", "next": "n5" },
+    "n5": { "type": "line", "speaker": "Chi", "text": "Anyway. I will send you back to the home screen now. See you later!", "side": "left", "avatar": "../images/avatars/chi_neutral.png", "next": "end" }
+  }
+}

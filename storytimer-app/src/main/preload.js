@@ -24,3 +24,23 @@ contextBridge.exposeInMainWorld('api', {
 		update:(patch)    => ipcRenderer.invoke('preferences:update', patch),
 	}
 });
+
+contextBridge.exposeInMainWorld('notes', {
+	add: (text) => ipcRenderer.invoke('notes:add', text),
+	list: (limit = 20, offset = 0) =>
+		ipcRenderer.invoke('notes:list', { limit, offset }),
+});
+
+contextBridge.exposeInMainWorld('sessions', {
+	start: ({ duration_target_sec }) =>
+		ipcRenderer.invoke('session:start', { duration_target_sec }),
+
+	finish: ({ id, outcome, duration_actual_sec }) =>
+		ipcRenderer.invoke('session:finish', { id, outcome, duration_actual_sec }),
+
+	list: (limit = 20, offset = 0) =>
+		ipcRenderer.invoke('session:list', { limit, offset }),
+
+	sumByRange: ({ fromMs, toMs }) =>
+		ipcRenderer.invoke('session:sumByRange', { fromMs, toMs }),
+});

@@ -1,0 +1,200 @@
+/* -------- Base layout (no overflow) -------- */
+.storyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* center horizontally */
+  width: 100%;
+  height: 100%;                /* fills the routed area below your titlebar */
+  min-height: 0;               /* allow child flexboxes to shrink */
+  overflow: hidden;            /* guard against tiny overflow */
+  color: var(--color-theme-black, #111);
+  box-sizing: border-box;
+}
+
+/* Avoid margin-collapsing / phantom height from default element margins */
+.storyContainer p,
+.storyContainer h1,
+.storyContainer h2,
+.storyContainer h3,
+.storyContainer h4,
+.storyContainer h5,
+.storyContainer h6 {
+  margin: 0;
+}
+
+/* -------- Title (top) -------- */
+.storyTitle {
+  flex: 0 0 auto;              /* only take the space it needs */
+  padding-top: 8px;            /* use padding instead of margin */
+  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-theme-grey, #666);
+  box-sizing: border-box;
+}
+
+/* -------- Frame (fills remaining space, docks content to bottom) -------- */
+.storyFrame {
+  flex: 1 1 0;                 /* take exactly the leftover space */
+  min-height: 0;               /* CRUCIAL: allows shrinking in flex layouts */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 24px 24px;        /* inner spacing that won’t grow outer height */
+  box-sizing: border-box;
+  overflow: hidden;            /* keep internals from creating scrollbars */
+}
+
+/* -------- Dialogue row (bottom) -------- */
+.storyLeft,
+.storyRight {
+  display: flex;
+  gap: 12px;
+  height: 100%;
+}
+
+.storyLeft  { align-items: center; justify-content: flex-start; }
+.storyRight { align-items: center;   justify-content: flex-end;   }
+
+/* -------- Avatar + bubble -------- */
+.storyAvatarContainer {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+}
+.storyAvatar {
+    width: 180px;
+    height: 180px;
+    margin-top: 50%;
+    border-radius: 9999px;
+    object-fit: cover;
+    background-color: rgba(255, 255, 0, 0.15); /* placeholder tint; optional */
+}
+
+.storyBubble { 
+    max-width: 90%; 
+    flex: 1 1 0;                 /* take exactly the leftover space */
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding-top: 20%;
+}
+
+.storyBubbleName {
+  font-size: 20px;
+  color: var(--color-theme-dark, #222);
+  margin: 0 0 6px 6px;         /* spacing within the bubble column */
+}
+.storyBubbleNameRight{
+    display: flex;
+    justify-content: flex-end;
+}
+.storyBubbleNameLeft{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.storyBubbleLeft,
+.storyBubbleRight {
+  background: var(--color-theme-teriary, rgba(0,0,0,0.06));
+  padding: 14px 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  overflow-wrap: anywhere;     /* safe wrapping for long unbroken text */
+  word-break: break-word;
+}
+
+.storyBubbleLeft  { border-top-left-radius: 4px; }
+.storyBubbleRight { border-top-right-radius: 4px; }
+
+.storyBubbleText {
+  line-height: 1.55;
+  margin: 0;                   /* prevent default p-margin from affecting height */
+}
+
+/* -------- Choices (also bottom-docked) -------- */
+.storyChoiceCard {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 16px;
+  padding: 12px;
+  box-sizing: border-box;
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.storyChoicePrompt {
+  font-size: 16px;
+  color: var(--color-theme-dark, #222);
+  margin-bottom: 10px;
+}
+
+.storyChoiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.storyChoiceBtn {
+  all: unset;                  /* icon/button reset */
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--color-choice-btn, rgba(0,0,0,0.06));
+  color: var(--color-theme-black, #111);
+  cursor: pointer;
+  transition: transform 0.05s ease, filter 0.15s ease;
+  box-sizing: border-box;
+}
+.storyChoiceBtn:hover  { filter: brightness(1.05); transform: scale(0.99); }
+
+.storyChoiceEmpty {
+  padding: 8px 10px;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* -------- Bottom-right “Next” icon (hidden on choice nodes) -------- */
+.storyNextContainer {
+  margin-top: auto;            /* pushes this row to the bottom of .storyFrame */
+  display: flex;
+  justify-content: flex-end;   /* right-align the icon */
+  width: 100%;
+  margin-top: 12px;
+  box-sizing: border-box;
+}
+
+.storyNextButton {
+  all: unset;                  /* no default button styles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;                /* maintain a11y click target */
+  border-radius: 50%;
+  color: var(--color-theme-dark, #222);
+  transition: transform 0.1s ease, color 0.2s ease;
+}
+.storyNextButton:hover { color: var(--color-theme-primary, #444); transform: translateX(2px); }
+.storyNextButton:active { transform: translateX(3px) scale(0.95); }
+
+/* -------- Status -------- */
+.storyLoading,
+.storyError {
+  padding: 12px;
+  font-size: 14px;
+}
+.storyError { color: #ef4444; }
+
+/* -------- Motion preferences (optional) -------- */
+@media (prefers-reduced-motion: reduce) {
+  .storyChoiceBtn,
+  .storyNextButton {
+    transition: none;
+  }
+}

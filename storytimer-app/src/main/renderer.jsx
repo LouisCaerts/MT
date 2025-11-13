@@ -6,6 +6,8 @@ import { HashRouter, Route, Routes, Link } from "react-router-dom";
 import Home from "../routes/Home.jsx";
 import Preferences from "../routes/Preferences.jsx";
 import Session from "../routes/Session.jsx";
+import Testing from "../routes/Testing.jsx";
+import TestingTwo from "../routes/Story.jsx";
 
 // components
 import Titlebar from '../components/Titlebar.jsx';
@@ -18,12 +20,24 @@ const App = () =>{
     return (
         <HashRouter>
             <Titlebar></Titlebar>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/session" element={<Session />} />
-                <Route path="/preferences" element={<Preferences />} />
-            </Routes>
+            
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",      // full window height
+                    overflow: "hidden",   // no scrollbars
+                }}
+            >
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/session" element={<Session />} />
+                    <Route path="/preferences" element={<Preferences />} />
+                    <Route path="/testing" element={<Testing />} />
+                    <Route path="/testingtwo" element={<TestingTwo scriptId="test" onDone={(flags)=>{/* ... */}} />} />
+                </Routes>
+            </div>
         </HashRouter>
     )
 };

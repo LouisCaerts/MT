@@ -14,6 +14,10 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
     const pausedStartRef    = useRef(null);
     const pausedMsRef       = useRef(0);
 
+    // session bookkeeping
+    const sessionIdRef      = useRef(null);   // active DB session id
+    const finishedRef       = useRef(false);  // prevent double finish
+
     // calculate remaining time on timer
     const computeTimeLeft = (now) => {
         if (startRef.current == null) return (duration * 1000);
@@ -34,9 +38,29 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
         return () => cancelAnimationFrame(raf);
     }, [duration]);
 
+    // helpers to finish current session in db
+    const getActiveMs = () => {
+        const left = computeTimeLeft();
+        return Math.max(0, (duration * 1000) - left);
+    };
+    const finishCurrent = async (outcome) => {
+        if (!sessionIdRef.current || finishedRef.current) return;
+        finishedRef.current = true;
+        try {
+            const activeMs = getActiveMs(); // excludes pauses
+            const actualSec = Math.round(activeMs / 1000);
+            await window.sessions.finish({ id: sessionIdRef.current, outcome, duration_actual_sec: actualSec });
+        } catch (e) {
+            console.error('finish session failed', e);
+        } finally {
+            sessionIdRef.current = null;
+        }
+    };
+
     // listen for main process timer completion
     useEffect(() => {
-        const unsubscribe = window.timerBridge.onComplete(() => {
+        const unsubscribe = window.timerBridge.onComplete(async () => {
+            await finishCurrent('completed');
             setIsRunning(false);
             setTimeLeft(0);
             onComplete?.();
@@ -65,15 +89,43 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
             setTimeLeft(left);
             if (isRunning) armMainDeadline();
             if (left === 0) {
-                setIsRunning(false);
-                cancelMainDeadline();
-                onComplete?.();
+                (async () => {
+                    await finishCurrent('completed');
+                    setIsRunning(false);
+                    cancelMainDeadline();
+                    onComplete?.();
+                })();
             }
         }
     }, [duration]);
 
+    // running session on unmount -> crash in db
+    useEffect(() => {
+        return () => {
+            if (sessionIdRef.current && !finishedRef.current) {
+                window.sessions.finish({ id: sessionIdRef.current, outcome: 'crash' })  // fire-and-forget; cannot await in unmount
+                  .catch(err => console.error('finish crash failed', err));
+                sessionIdRef.current = null;
+                finishedRef.current = true;
+            }
+        };
+    }, []);
+
     // start timer
-    const start = () => {
+    const start = async () => {
+        const startingFresh = (startRef.current == null);
+        if (startingFresh) {
+            try {
+                const { id } = await window.sessions.start({
+                    duration_target_sec: Math.round(duration)
+                });
+                sessionIdRef.current = id;
+                finishedRef.current = false;
+            } catch (e) {
+                console.error('start session failed', e);
+            }
+        }
+
         startRef.current = performance.now() - ((duration * 1000) - timeLeft);
         pausedMsRef.current = 0;
         pausedStartRef.current = null;
@@ -100,7 +152,12 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
     };
 
     // reset timer
-    const reset = () => {
+    const reset = async () => {
+        // reset session before finish -> 'cancelled' in db
+        if (sessionIdRef.current && !finishedRef.current) {
+            await finishCurrent('cancelled');
+        }
+
         setIsRunning(false);
         setTimeLeft(duration * 1000);
         startRef.current = null;

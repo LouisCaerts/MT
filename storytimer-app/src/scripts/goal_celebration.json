@@ -1,0 +1,24 @@
+{
+  "id": "goal_celebration",
+  "title": "Celebration Time",
+  "start": "n1",
+  "nodes": {
+    "n1": { "type": "line", "speaker": "Mentor", "text": "You did it.", "side": "left", "avatar": "/avatars/mentor.png", "next": "n2" },
+    "n2": { "type": "line", "speaker": "You", "text": "What's next?", "side": "right", "next": "c1" },
+    "c1": {
+      "type": "choice",
+      "text": "How do you want to celebrate?",
+      "speaker": "Mentor",
+      "side": "left",
+      "avatar": "/avatars/mentor.png",
+      "choices": [
+        { "text": "Log it quietly.", "next": "a1" },
+        { "text": "Tell the team!", "next": "n3" }
+      ]
+    },
+    "a1": { "type": "action", "set": { "hasMedal": true },"avatar": "/avatars/mentor.png", "speaker": "Mentor", "text": "Done.", "next": "n4" },
+    "n3": { "type": "line", "speaker": "Mentor", "text": "Broadcast sent.", "avatar": "/avatars/mentor.png", "next": "n4" },
+    "n4": { "type": "line", "speaker": "Mentor", "text": "Tomorrow we climb again.", "avatar": "/avatars/mentor.png", "next": "end" },
+    "end": { "type": "end" }
+  }
+}
