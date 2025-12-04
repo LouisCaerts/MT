@@ -1,8 +1,5 @@
-/////////////////////////////////////////////////////////////
-
-
 // imports
-import { app, BrowserWindow, nativeImage, Tray, Menu, screen, ipcMain, powerMonitor } from 'electron';
+import { app, BrowserWindow, nativeImage, Tray, Menu, screen, ipcMain, powerMonitor, dialog } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import preferences from './preferences.js';
@@ -14,6 +11,7 @@ let mainWindow      = null;
 let mainTray        = null;
 let armedTimer      = null;
 let armedDeadline   = null;
+let quitting        = false;
 
 // definitions
 const gotTheLock = app.requestSingleInstanceLock()
@@ -21,167 +19,195 @@ const mainTrayIcon = nativeImage.createFromDataURL('data:image/png;base64,iVBORw
 const db = initDb();
 const api = buildDataApi(db);
 
-/////////////////////////////////////////////////////////////
+const dbPath = path.join(app.getPath('userData'), 'data');
+console.log('SQLite DB file is at:', dbPath);
+console.log('userData folder is:', app.getPath('userData'));
+
+console.log('Preferences store initialized.');
 
 
-// exit during Squirrel install/update events to prevent the app UI from launching
+// exit during Squirrel install/update events
 if (started) { app.quit(); }
 
-// Only allow one application instance to run at once
+// single instance lock
 if (!gotTheLock) {
-  	app.quit();
-} 
-else {
+    app.quit();
+} else {
 
-	// focus primary window when user tries to reopen app while it is already running
-	app.on('second-instance', () => {
-		if (mainWindow) {
-			if (mainWindow.isMinimized()) mainWindow.restore();
-			mainWindow.show();
-			mainWindow.focus();
-		}
-	})
+    //---------------------------------------------
+    // Setup clean cross-platform window lifecycle
+    //---------------------------------------------
 
-  	const createWindow = () => {
+    // macOS: don't quit when last window closes
+    app.on('window-all-closed', () => {
+        // do nothing on macOS
+        // on Windows/Linux we want the tray to keep the app alive
+    });
 
-		// prepare application size and position (bottom right corner of primary display)
-		const primaryDisplay = screen.getPrimaryDisplay();
-		const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
-		const appWindowWidth = 800;
-		const appWindowHeight = 500;
-		const x = screenWidth - appWindowWidth;
-		const y = screenHeight - appWindowHeight;
+    // need to allow quit
+    app.on('before-quit', () => {
+        quitting = true;
+    });
 
-		mainWindow = new BrowserWindow({
-			width: appWindowWidth,
-			height: appWindowHeight,
-			maxWidth: appWindowWidth,
-			maxHeight: appWindowHeight,
-			minWidth: appWindowWidth,
-			minHeight: appWindowHeight,
-			x: x,
-			y: y,
+    // macOS dock click restores window
+    app.on('activate', () => {
+        if (mainWindow) mainWindow.show();
+    });
 
-			alwaysOnTop: true,
-			icon: './src/images/icon.png',
-			
-			// disable native titlebar in favor of custom implementation
-			frame: false,
-			
-			webPreferences: {
-				preload: path.join(__dirname, 'preload.js'),
-				contextIsolation: true,
-				nodeIntegration: false,
-			}
-		});
 
-		if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-			mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-		} else {
-			mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-		}
+    //---------------------------------------------
+    // Main window creation
+    //---------------------------------------------
+    const createWindow = () => {
 
-		// hide app on closing instead of fully exiting
-		mainWindow.on('close', (event) => {
-			event.preventDefault();
-			mainWindow.hide();
-		});
+        const primaryDisplay = screen.getPrimaryDisplay();
+        const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+        const appWindowWidth = 800;
+        const appWindowHeight = 500;
+        const x = screenWidth - appWindowWidth;
+        const y = screenHeight - appWindowHeight;
 
-		// open devtools alongside app (development mode only)
-		if (MAIN_WINDOW_VITE_DEV_SERVER_URL) { mainWindow.webContents.openDevTools(); }
-		
-		// setup tray icon and context menu
-		const contextMenu = Menu.buildFromTemplate([
-			{
-				label: 'Open', 
-				click: () => { mainWindow.show(); }
-			},
-			{
-				label: 'Exit', 
-				click: () => { app.exit(); }
-			}
-		]);
-		mainTray = new Tray(mainTrayIcon);
-		mainTray.setToolTip('Storytimer');
-		mainTray.setContextMenu(contextMenu);
-	
-		// enable app reopening by double-clicking tray icon
-		mainTray.on('double-click', () => {
-			mainWindow.setBounds({ x, y, width: appWindowWidth, height: appWindowHeight });
-			if (mainWindow.isMinimized()) mainWindow.restore();
-			mainWindow.show();
-			mainWindow.focus();
-		});
-  	};
+        mainWindow = new BrowserWindow({
+            width: appWindowWidth,
+            height: appWindowHeight,
+            maxWidth: appWindowWidth,
+            maxHeight: appWindowHeight,
+            minWidth: appWindowWidth,
+            minHeight: appWindowHeight,
+            x: x,
+            y: y,
+            alwaysOnTop: true,
+            icon: './src/images/icon.png',
+            frame: false,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js'),
+                contextIsolation: true,
+                nodeIntegration: false,
+            }
+        });
 
+        if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+            mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+        } else {
+            mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+        }
+
+        // correct close behavior (hide, unless quitting)
+        mainWindow.on('close', (event) => {
+            if (!quitting) {
+                event.preventDefault();
+                mainWindow.hide();
+            }
+        });
+
+        if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+            mainWindow.webContents.openDevTools();
+        }
+
+        //---------------------------------------------
+        // Tray with cross-platform restore behavior
+        //---------------------------------------------
+        const contextMenu = Menu.buildFromTemplate([
+            { label: 'Open', click: () => openMainWindow() },
+            { label: 'Exit', click: () => { quitting = true; app.quit(); } }
+        ]);
+
+        mainTray = new Tray(mainTrayIcon);
+        mainTray.setToolTip('Storytimer');
+        mainTray.setContextMenu(contextMenu);
+
+        // Windows native double-click
+        mainTray.on('double-click', () => openMainWindow());
+
+        // macOS double-click via clickCount
+        mainTray.on('click', (event, bounds, position) => {
+            if (position?.clickCount === 2) openMainWindow();
+        });
+
+        function openMainWindow() {
+            mainWindow.setBounds({ x, y, width: appWindowWidth, height: appWindowHeight });
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.show();
+            mainWindow.focus();
+        }
+    };
+
+
+    //---------------------------------------------
+    // Helper utilities
+    //---------------------------------------------
     function clamp(n, min, max) {
-      	return Math.max(min, Math.min(max, n));
-  	}
+        return Math.max(min, Math.min(max, n));
+    }
 
-	// sets a backend-side timer based on a Date object to avoid the desyncing of renderer-side intervals
-	function armTimer(deadline) {
-		if (armedTimer) { clearTimeout(armedTimer); armedTimer = null; }
-		armedDeadline = deadline;
 
-		const ms = Math.max(0, deadline - Date.now());
-		armedTimer = setTimeout(() => {
-			armedTimer = null;
-			if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send("timer:complete");
-		}, ms);
-	}
+    //---------------------------------------------
+    // Timer logic (unchanged)
+    //---------------------------------------------
+    function armTimer(deadline) {
+        if (armedTimer) { clearTimeout(armedTimer); armedTimer = null; }
+        armedDeadline = deadline;
 
-	// cancels a timer set by armTimer
-	function cancelTimer() {
-		if (armedTimer) { clearTimeout(armedTimer); armedTimer = null; }
-		armedDeadline = null;
-	}
+        const ms = Math.max(0, deadline - Date.now());
+        armedTimer = setTimeout(() => {
+            armedTimer = null;
+            if (mainWindow && !mainWindow.isDestroyed()) {
+                mainWindow.webContents.send("timer:complete");
+            }
+        }, ms);
+    }
 
-	// rearms timer after system resume event
-	powerMonitor.on("resume", () => {
-		if (armedDeadline != null) armTimer(armedDeadline);
-	});
+    function cancelTimer() {
+        if (armedTimer) { clearTimeout(armedTimer); armedTimer = null; }
+        armedDeadline = null;
+    }
 
-    // main process IPC endpoints for timer controls
+    powerMonitor.on("resume", () => {
+        if (armedDeadline != null) armTimer(armedDeadline);
+    });
+
+
+    //---------------------------------------------
+    // IPC handlers (unchanged)
+    //---------------------------------------------
     ipcMain.handle("timer:arm", (_e, deadline) => { armTimer(deadline); return true; });
     ipcMain.handle("timer:cancel", () => { cancelTimer(); return true; });
 
-    // main process IPC endpoints for stoplight controls
     ipcMain.on("win:minimize", () => mainWindow.minimize());
     ipcMain.on("win:close", () => mainWindow.close());
     ipcMain.handle("app:platform", () => process.platform);
 
-    // main process IPC endpoints for user preferences
     ipcMain.handle('preferences:get', (_e, key) => preferences.get(key));
     ipcMain.handle('preferences:getAll', () => preferences.store);
     ipcMain.handle('preferences:set', (_e, key, val) => {
-        if (key === 'dailyWorkMinutes') { val = clamp(Number(val ?? 0), 0, 1440); }
-        if (key === 'notificationsPerDay') { val = clamp(Number(val ?? 0), 0, 100); }
-        if (key === 'notificationsEnabled') { val = !!val; }
+        if (key === 'dailyWorkMinutes') val = clamp(Number(val ?? 0), 0, 1440);
+        if (key === 'notificationsPerDay') val = clamp(Number(val ?? 0), 0, 100);
+        if (key === 'notificationsEnabled') val = !!val;
         preferences.set(key, val);
         return true;
     });
+
     ipcMain.handle('preferences:update', (_e, patch = {}) => {
         const next = { ...preferences.store, ...patch };
-
-        next.dailyWorkMinutes    = clamp(Number(next.dailyWorkMinutes ?? 0), 0, 1440);
+        next.dailyWorkMinutes = clamp(Number(next.dailyWorkMinutes ?? 0), 0, 1440);
         next.notificationsPerDay = clamp(Number(next.notificationsPerDay ?? 0), 0, 100);
         next.notificationsEnabled = !!next.notificationsEnabled;
-
         preferences.store = next;
         return preferences.store;
     });
 
-	// main process IPC endpoints for database
-	ipcMain.handle('notes:add', (_e, text) => api.addNote(text));
-	ipcMain.handle('notes:list', (_e, { limit = 20, offset = 0 }) => api.getNotes(limit, offset));
-	ipcMain.handle('session:start', (_e, payload) => api.startSession(payload));
-	ipcMain.handle('session:finish', (_e, payload) => api.finishSession(payload));
-	ipcMain.handle('session:list', (_e, payload) => api.getSessions(payload.limit, payload.offset));
-	ipcMain.handle('session:sumByRange', (_e, { fromMs, toMs }) => api.getFocusedSecondsInRange(fromMs, toMs));
+    ipcMain.handle('notes:add', (_e, text) => api.addNote(text));
+    ipcMain.handle('notes:list', (_e, { limit = 20, offset = 0 }) => api.getNotes(limit, offset));
+    ipcMain.handle('session:start', (_e, payload) => api.startSession(payload));
+    ipcMain.handle('session:finish', (_e, payload) => api.finishSession(payload));
+    ipcMain.handle('session:list', (_e, payload) => api.getSessions(payload.limit, payload.offset));
+    ipcMain.handle('session:sumByRange', (_e, { fromMs, toMs }) => api.getFocusedSecondsInRange(fromMs, toMs));
 
 
-	// launch app when ready
-	app.whenReady().then(() => {
-		createWindow();
-	});
+    //---------------------------------------------
+    // Launch app
+    //---------------------------------------------
+    app.whenReady().then(() => {
+        createWindow();
+    });
 }
