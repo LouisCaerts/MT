@@ -1,8 +1,25 @@
 import '../stylesheets/PreferencesForm.css';
 
 import { useEffect, useState } from 'react';
-import { PreferencesAPI } from '../main/api';
+import { PreferencesAPI, DaysAPI } from '../main/api';
 import { Link, useNavigate } from "react-router-dom";
+
+
+// helpers
+function todayISO() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function getTodayGoalKey() {
+    // 0 = Sunday, 1 = Monday, ...
+    const weekday = new Date().getDay();
+    const keys = ['sunGoal', 'monGoal', 'tueGoal', 'wedGoal', 'thuGoal', 'friGoal', 'satGoal'];
+    return keys[weekday];
+}
 
 export default function PreferencesForm() {
 
@@ -61,9 +78,24 @@ export default function PreferencesForm() {
             sessionLength: clamp(Number(form.sessionLength), 0, 599),
         };
 
+        // 1) Save preferences
         await PreferencesAPI.update(patch);
+
+        // 2) Update today's day row goal if applicable
+        try {
+            const todayKey = getTodayGoalKey(); // e.g. "monGoal"
+            const todaysGoal = patch[todayKey];
+
+            if (typeof todaysGoal === 'number') {
+                const date = todayISO();
+                await DaysAPI.setGoal({ date, goal_min: todaysGoal });
+            }
+        } catch (err) {
+            console.error('Failed to update today goal in days table', err);
+        }
+
+        // 3) Navigate back home
         navigate("/home", { state: { toast: "Preferences saved successfully!" } });
-        return
     }
 
     function handleBackClick(e) {

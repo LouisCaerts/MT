@@ -3,6 +3,15 @@ import '../stylesheets/Timer.css';
 import { useEffect, useRef, useState } from "react";
 import { Play, Pause, RotateCcw } from "lucide-react";
 
+//helpers
+const todayISO = () => {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+};
+
 export default function Timer({ duration = 90,  autoStart = false, onComplete }) 
 {
     // states
@@ -46,16 +55,36 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
     const finishCurrent = async (outcome) => {
         if (!sessionIdRef.current || finishedRef.current) return;
         finishedRef.current = true;
+
         try {
             const activeMs = getActiveMs(); // excludes pauses
             const actualSec = Math.round(activeMs / 1000);
-            await window.sessions.finish({ id: sessionIdRef.current, outcome, duration_actual_sec: actualSec });
+
+            // 1) finish the session in the sessions table
+            await window.sessions.finish({
+                id: sessionIdRef.current,
+                outcome,
+                duration_actual_sec: actualSec,
+            });
+
+            // 2) if the session was COMPLETED, add its focused time to today's day row
+            if (outcome === 'completed' && actualSec > 0 && window.days?.addFocus) {
+                const minutes = actualSec / 60; // days.focused_min is in minutes
+                const date = todayISO();
+
+                try {
+                    await window.days.addFocus({ date, minutes });
+                } catch (e) {
+                    console.error('update days focused_min failed', e);
+                }
+            }
         } catch (e) {
             console.error('finish session failed', e);
         } finally {
             sessionIdRef.current = null;
         }
     };
+
 
     // listen for main process timer completion
     useEffect(() => {

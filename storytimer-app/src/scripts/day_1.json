@@ -1,0 +1,132 @@
+{
+  "id": "birb_day1",
+  "title": "Day 1",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I did it! I actually cleared all my emails and finished that report! We're amazing [username]!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n2"
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Oh look there is Crowley, my work friend. He's a bit silly.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n3"
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "Hey Birb. Had a good day?",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n4"
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Yes, it was great thanks to the help [username] gave me! How about you Crowley?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n5"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "My day was awful! I was out of milk so I put ketchup in my coffee, it was awful.",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n6"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Why would you...?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "Anyway, a mysterious letter arrived for you, bye!",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "And there he goes. But what is this letter? I'll read it.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n9"
+    },
+    "n9": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Strange, it just says \"Prepare yourself for your downfall Birb\"... Do you think I should be worried?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "Do you think I should be worried?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "Yes, you should move to a different country!",
+          "next": "n10"
+        },
+        {
+          "text": "Nah, it's just a prank clearly!",
+          "next": "n11"
+        },
+        {
+          "text": "I don't know, does this happen often?",
+          "next": "n12"
+        }
+      ]
+    },
+    "n10": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I can't afford that...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n13"
+    },
+    "n11": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I hope so... still it's strange...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n13"
+    },
+    "n12": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Not to me...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n13"
+    },
+    "n13": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Anyway, I can ask my colleagues next time. Let's get some well deserved rest for a good day first!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}

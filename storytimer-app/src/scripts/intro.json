@@ -1,0 +1,92 @@
+{
+  "id": "birb_intro",
+  "title": "Introduction",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Today is a big week for me! I have a performance assessment at the end of the week at work!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n2"
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I've been doing really well, but our company is cursed!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n3"
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Many people start messing up the final week before their performance assessment.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "So I have to avoid this curse!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "Curses aren't real!",
+          "next": "n4"
+        },
+        {
+          "text": "We'll be super careful!",
+          "next": "n5"
+        },
+        {
+          "text": "Just call in sick then!",
+          "next": "n6"
+        }
+      ]
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Maybe...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Good idea!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I'm out of sick days...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "If we work hard, we can conquer anything! Let's just focus on that!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I'm really happy we're doing this together [username]... <3",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}

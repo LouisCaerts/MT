@@ -2,7 +2,7 @@ import '../stylesheets/Home.css';
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { PreferencesAPI } from '../main/api';
+import { PreferencesAPI, DaysAPI } from '../main/api';
 
 import WeeklyProgress from '../components/WeeklyProgress';
 import DailyProgress from '../components/DailyProgress';
@@ -25,6 +25,13 @@ const startOfLocalDayMs = (d = new Date()) => {
 const startOfNextLocalDayMs = (d = new Date()) => {
 	return startOfLocalDayMs(d) + 24 * 60 * 60 * 1000;
 };
+const todayISO = () => {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`; // e.g. "2025-12-02"
+};
 
 
 export default function Home() {
@@ -41,9 +48,19 @@ export default function Home() {
 		const loadToday = async () => {
 			const prefs = await PreferencesAPI.getAll();
 			if (abort) return;
+
 			const k = getTodayKey();
 			setTodayKey(k);
-			setGoal(prefs?.[k] ?? 120);
+
+			const newGoal = prefs?.[k] ?? 120;
+			setGoal(newGoal);
+
+			try {
+				const date = todayISO();
+				await DaysAPI.ensure({ date, goal_min: newGoal });
+			} catch (e) {
+				console.error('Failed to ensure day row', e);
+			}
 		};
 
 		// load today's focus sum from SQLite via preload

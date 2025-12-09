@@ -178,7 +178,10 @@ else {
 	ipcMain.handle('session:finish', (_e, payload) => api.finishSession(payload));
 	ipcMain.handle('session:list', (_e, payload) => api.getSessions(payload.limit, payload.offset));
 	ipcMain.handle('session:sumByRange', (_e, { fromMs, toMs }) => api.getFocusedSecondsInRange(fromMs, toMs));
-
+	ipcMain.handle('day:ensure', (_e, payload) => api.ensureDay(payload));
+	ipcMain.handle('day:addFocus', (_e, payload) => api.addFocusMinutes(payload));
+	ipcMain.handle('day:list', (_e) => api.getDays());
+	ipcMain.handle('day:setGoal', (_e, payload) => api.setDayGoal(payload));
 
 	// launch app when ready
 	app.whenReady().then(() => {

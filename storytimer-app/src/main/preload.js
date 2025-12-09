@@ -44,3 +44,14 @@ contextBridge.exposeInMainWorld('sessions', {
 	sumByRange: ({ fromMs, toMs }) =>
 		ipcRenderer.invoke('session:sumByRange', { fromMs, toMs }),
 });
+
+contextBridge.exposeInMainWorld('days', {
+    ensure: ({ date, goal_min }) =>
+        ipcRenderer.invoke('day:ensure', { date, goal_min }),
+    addFocus: ({ date, minutes }) =>
+        ipcRenderer.invoke('day:addFocus', { date, minutes }),
+    list: () =>
+        ipcRenderer.invoke('day:list'),
+    setGoal: ({ date, goal_min }) =>
+        ipcRenderer.invoke('day:setGoal', { date, goal_min }),
+});

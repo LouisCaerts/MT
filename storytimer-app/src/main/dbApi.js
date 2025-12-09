@@ -10,6 +10,38 @@ export function buildDataApi(db) {
         LIMIT @limit OFFSET @offset
     `);
 
+    const insertDay = db.prepare(`
+        INSERT INTO days (
+            date, goal_min, focused_min
+        ) VALUES (
+            @date, @goal_min, @focused_min
+        )
+    `);
+
+    const getDayByDate = db.prepare(`
+        SELECT *
+        FROM days
+        WHERE date = ?
+    `);
+
+    const addFocusToDay = db.prepare(`
+        UPDATE days
+        SET focused_min = focused_min + @delta_min
+        WHERE date = @date
+    `);
+
+    const setDayGoalByDate = db.prepare(`
+        UPDATE days
+        SET goal_min = @goal_min
+        WHERE date = @date
+    `);
+
+    const listDays = db.prepare(`
+        SELECT *
+        FROM days
+        ORDER BY date ASC
+    `);
+
     const insertSession = db.prepare(`
         INSERT INTO sessions (
             started_at, duration_target_sec, outcome, tz_offset_min
@@ -57,6 +89,40 @@ export function buildDataApi(db) {
         },
         getNotes(limit = 20, offset = 0) {
             return listNotes.all({ limit, offset });
+        },
+
+        // days
+        ensureDay({ date, goal_min }) {
+            if (!date) throw new Error('ensureDay: date is required');
+
+            const existing = getDayByDate.get(date);
+            if (existing) return existing;
+
+            const info = insertDay.run({
+                date,
+                goal_min: Math.round(goal_min ?? 0),
+                focused_min: 0,
+            });
+
+            return getDayByDate.get(date);
+        },
+        addFocusMinutes({ date, minutes }) {
+            if (!date) throw new Error('addFocusMinutes: date is required');
+            const delta_min = Math.round(minutes ?? 0);
+
+            addFocusToDay.run({ date, delta_min });
+
+            return getDayByDate.get(date);
+        },
+        getDays() {
+            return listDays.all();
+        },
+        setDayGoal({ date, goal_min }) {
+            if (!date) throw new Error('setDayGoal: date is required');
+
+            setDayGoalByDate.run({ date, goal_min: Math.round(goal_min ?? 0) });
+
+            return getDayByDate.get(date);
         },
 
         // sessions

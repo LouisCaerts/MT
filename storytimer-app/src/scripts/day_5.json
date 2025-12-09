@@ -1,0 +1,209 @@
+{
+  "id": "birb_day5",
+  "title": "Day 5",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "We did it [username]! We caught Chickita!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n2"
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Urgh, I can't run in heels!",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n3"
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Why would you try to sabotage me Chickita? I thought we were friends?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n4"
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Welllllll, I got bored.",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n5"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You got... bored?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "THAT'S THE REASON?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "...",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Yah.",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n9"
+    },
+    "n9": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I can't believe it...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "What do you think about this?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "Yep. She's crazy.",
+          "next": "n10"
+        },
+        {
+          "text": "She's lying!",
+          "next": "n11"
+        },
+        {
+          "text": "Who cares? She got caught!",
+          "next": "n12"
+        }
+      ]
+    },
+    "n10": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Rude!",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n13"
+    },
+    "n11": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Rude!",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n13"
+    },
+    "n12": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "I would have gotten away if I was wearing sneakers though.",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n13"
+    },
+    "n13": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Mr Owliver!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n14"
+    },
+    "n14": {
+      "type": "line",
+      "speaker": "Mr Owliver",
+      "text": "Chickita, I learned about your behaviour. We will discuss it later!",
+      "side": "right",
+      "avatar": "../images/avatars/mr_owliver.png",
+      "next": "n15"
+    },
+    "n15": {
+      "type": "line",
+      "speaker": "Mr Owliver",
+      "text": "And you Birb, let's do your performance assessment right now!",
+      "side": "right",
+      "avatar": "../images/avatars/mr_owliver.png",
+      "next": "n16"
+    },
+    "n16": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "*gulp* I'm nervous...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c2"
+    },
+    "c2": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "What should I do?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "You can do it!",
+          "next": "n17"
+        },
+        {
+          "text": "Just picture Mr Owliver in his underwear!",
+          "next": "n18"
+        },
+        {
+          "text": "Want to run away?",
+          "next": "n19"
+        }
+      ]
+    },
+    "n17": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You're right, thanks [username]!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n20"
+    },
+    "n18": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "... No thanks.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n20"
+    },
+    "n19": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You make it sound tempting!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n20"
+    },
+    "n20": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I want to see this through. I'm going in! Wish me luck!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}

@@ -38,5 +38,15 @@ export function initDb() {
         CREATE INDEX IF NOT EXISTS idx_sessions_outcome ON sessions(outcome);
     `);
 
+    // days table
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS days (
+            id INTEGER PRIMARY KEY,
+            date DATE NOT NULL UNIQUE,
+            goal_min INTEGER NOT NULL,
+            focused_min INTEGER NOT NULL
+        );
+    `);
+
     return db;
 }

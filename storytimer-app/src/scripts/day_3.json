@@ -1,0 +1,153 @@
+{
+  "id": "birb_day3",
+  "title": "Day 3",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Hey [username]! Great work today!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "Sorry if I seem sad. I just have a bad feeling about this mysterious letter...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "It's okay to feel down, I'm here for you!",
+          "next": "n2"
+        },
+        {
+          "text": "That's just extra reason for us to find the culprit!",
+          "next": "n3"
+        },
+        {
+          "text": "Would you like some chocolate?",
+          "next": "n4"
+        }
+      ]
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Thank you. You're an awesome friend!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n5"
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You're right! With your friendship I can do anything!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n5"
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "That's not gonna help!... But yes I would like some chocolate...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n5"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Anyway, Chickita said she saw someone carrying that letter around here... wait there is another letter here look!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "It's empty!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Mr Owliver",
+      "text": "Birb! You know no one is allowed back here!",
+      "side": "right",
+      "avatar": "../images/avatars/mr_owliver.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "But, I was only looking for--",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n9"
+    },
+    "n9": {
+      "type": "line",
+      "speaker": "Mr Owliver",
+      "text": "Now now Birb! As your boss, I cannot tolerate rule breaks of any kind!",
+      "side": "right",
+      "avatar": "../images/avatars/mr_owliver.png",
+      "next": "n10"
+    },
+    "n10": {
+      "type": "line",
+      "speaker": "Mr Owliver",
+      "text": "I will have to take this into consideration for your performance review at the end of the week...",
+      "side": "right",
+      "avatar": "../images/avatars/mr_owliver.png",
+      "next": "n11"
+    },
+    "n11": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "[username]can you believe this?!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c2"
+    },
+    "c2": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "What do you think is going on?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "Crowley planned all of this!",
+          "next": "n12"
+        },
+        {
+          "text": "Chickita tricked us!",
+          "next": "n12"
+        },
+        {
+          "text": "Mr Owliver clearly hates you!",
+          "next": "n12"
+        }
+      ]
+    },
+    "n12": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Do you think so?? IT could be true...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n13"
+    },
+    "n13": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Please help me out a little longer to get to the bottom of this!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}

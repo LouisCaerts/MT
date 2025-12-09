@@ -4,8 +4,8 @@ import WeeklyProgressBadge from './WeeklyProgressBadge';
 import { Flag } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { PreferencesAPI } from '../main/api';
 
+// helpers
 const startOfLocalDayMs = (d = new Date()) => {
   const x = new Date(d);
   x.setHours(0, 0, 0, 0);
@@ -23,12 +23,17 @@ const startOfWeekMonday = (d = new Date()) => {
   monday.setHours(0, 0, 0, 0);
   return monday;
 };
-
 const nextMidnight = () => {
   const now = new Date();
   const m = new Date(now);
   m.setHours(24, 0, 0, 0);
   return m;
+};
+const toISODate = (d) => {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
 };
 
 const ORDER = [
@@ -54,30 +59,34 @@ export default function WeeklyProgress({ day = "???" }) {
 
     const loadStars = async () => {
       try {
-        // 1) Load user goals (minutes); default 120 if missing
-        const prefs = await PreferencesAPI.getAll();
-
-        // 2) Compute Monday 00:00 for the current local week
+        // 1) Compute Monday 00:00 for the current local week
         const monday = startOfWeekMonday(new Date());
 
-        // 3) For each weekday, sum completed seconds and compare to goal
+        // 2) Load all day rows from the DB
+        //    window.days is exposed in preload.js
+        const allDays = await window.days.list();
+
+        // Build a map date -> row for fast lookup
+        const dayByDate = {};
+        for (const row of allDays) {
+          // row has: { id, date, goal_min, focused_min }
+          dayByDate[row.date] = row;
+        }
+
+        // 3) For each weekday, look up that calendar date in the map
         const results = {};
 
-        // We iterate Mon(0)..Sun(6)
         for (let i = 0; i < ORDER.length; i++) {
           const { key } = ORDER[i];
 
-          // Day window [start, nextStart)
-          const dayStart = startOfLocalDayMs(addDays(monday, i));
-          const nextDayStart = dayStart + 24 * 60 * 60 * 1000;
+          // Calendar date for this weekday
+          const dateObj = addDays(monday, i);
+          const dateStr = toISODate(dateObj);
 
-          // Sum completed focus seconds for that day (uses started_at by design)
-          // NOTE: window.sessions.sumByRange is exposed in preload
-          const totalSec = await window.sessions.sumByRange({ fromMs: dayStart, toMs: nextDayStart });
+          const row = dayByDate[dateStr];
 
-          // Goal in minutes -> compare in seconds
-          const goalMin = Number.isFinite(prefs?.[key]) ? prefs[key] : 120;
-          const hit = (totalSec >= goalMin * 60);
+          // If no row exists for that day yet -> no star
+          const hit = row ? (row.focused_min >= row.goal_min) : false;
 
           results[key] = !!hit;
         }
@@ -96,6 +105,7 @@ export default function WeeklyProgress({ day = "???" }) {
 
     loadStars();
 
+    // Re-arm at midnight so tomorrow's day gets picked up
     const arm = () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       const ms = Math.max(0, nextMidnight() - new Date());
@@ -126,8 +136,6 @@ export default function WeeklyProgress({ day = "???" }) {
       <WeeklyProgressBadge id="badgeFri" showArrow={day === "friGoal"} showStar={stars.friGoal} label="Fri" />
       <WeeklyProgressBadge id="badgeSat" showArrow={day === "satGoal"} showStar={stars.satGoal} label="Sat" />
       <WeeklyProgressBadge id="badgeSun" showArrow={day === "sunGoal"} showStar={stars.sunGoal} label="Sun" />
-
-      <Flag id="finishFlag" size={50} strokeWidth={1} />
     </div>
   );
 }

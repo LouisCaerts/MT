@@ -1,0 +1,185 @@
+{
+  "id": "birb_day4",
+  "title": "Day 4",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "All right [username]! We finished all our work on time to come up with a plan!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n2"
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Mr Owliver thinks we broke the rules, when we were just investigating a threat!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "But what can we do to fix this?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "We could send a fruit basket to Mr Owliver?",
+          "next": "n3"
+        },
+        {
+          "text": "We should work extra hard to impress Mr Owliver!",
+          "next": "n4"
+        },
+        {
+          "text": "Mr Owliver is evil! Don't trust him!",
+          "next": "n5"
+        }
+      ]
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Would it come across as bribing though?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I suppose that could work... but I'm already so tired!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You really think so??",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "Hey Birb, another letter for you!",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "OMG, are you being threatened again??",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "Why would he be threatened? The only threatening thing I know is mustard in coffee.",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n9"
+    },
+    "n9": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "...",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n10"
+    },
+    "n10": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "!!!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n11"
+    },
+    "n11": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "I never told anyone other than [username] I am being threatened!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n12"
+    },
+    "n12": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Chickita! Are you doing this??",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n13"
+    },
+    "n13": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "EEP! I got caught!",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n14"
+    },
+    "n14": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "She's running away!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "c2"
+    },
+    "c2": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "What should we do?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "Let's run after her!",
+          "next": "n15"
+        },
+        {
+          "text": "Let's call the police!",
+          "next": "n15"
+        },
+        {
+          "text": "Pull the fire alarm!",
+          "next": "n15"
+        }
+      ]
+    },
+    "n15": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Good idea!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n16"
+    },
+    "n16": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "We just have to catch her and this will all be over!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n17"
+    },
+    "n17": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "One more day of hard work [username], we can do this!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}

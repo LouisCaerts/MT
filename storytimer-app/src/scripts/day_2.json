@@ -1,0 +1,124 @@
+{
+  "id": "birb_day2",
+  "title": "Day 2",
+  "start": "n1",
+  "nodes": {
+    "n1": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Another great day [username], we are unstoppable!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n2"
+    },
+    "n2": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Anyway, remember that mysterious letter we found? Let's go ask some people about it.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n3"
+    },
+    "n3": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Hey Crowley, do you know who delivered this letter?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n4"
+    },
+    "n4": {
+      "type": "line",
+      "speaker": "Crowley",
+      "text": "No, but I know that mayonnaise and coffee isn't a good combination.",
+      "side": "right",
+      "avatar": "../images/avatars/crowley.png",
+      "next": "n5"
+    },
+    "n5": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Uhm... okay.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n6"
+    },
+    "n6": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Chickita, have you seen this letter before?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n7"
+    },
+    "n7": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "Huh, I think I saw someone carrying that the other week, but I'm not sure.",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "n8"
+    },
+    "n8": {
+      "type": "line",
+      "speaker": "Chickita",
+      "text": "They were headed to the hallway that is under construction. Maybe look there?",
+      "side": "right",
+      "avatar": "../images/avatars/chickita.png",
+      "next": "c1"
+    },
+    "c1": {
+      "type": "choice",
+      "speaker": "Birb",
+      "text": "Hmmm, we're not supposed to go there because it could be dangerous. What do you think [username]?",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "choices": [
+        {
+          "text": "We must investigate!",
+          "next": "n9"
+        },
+        {
+          "text": "But what if you get hurt?!",
+          "next": "n10"
+        },
+        {
+          "text": "Maybe we can just check out the entrance?",
+          "next": "n11"
+        }
+      ]
+    },
+    "n9": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "You're right! Next time we will head out for our investigation!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n12"
+    },
+    "n10": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "It does sound scary... we'll be very careful, but we can quickly look around.",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n12"
+    },
+    "n11": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Good idea! That's the best of both worlds!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "n12"
+    },
+    "n12": {
+      "type": "line",
+      "speaker": "Birb",
+      "text": "Wow, this is turning into a real investigation! But I know we can do it together [username]!",
+      "side": "left",
+      "avatar": "../images/avatars/birb.png",
+      "next": "end"
+    }
+  }
+}
