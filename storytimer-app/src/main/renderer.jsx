@@ -8,6 +8,7 @@ import Preferences from "../routes/Preferences.jsx";
 import Session from "../routes/Session.jsx";
 import Testing from "../routes/Testing.jsx";
 import TestingTwo from "../routes/Story.jsx";
+import Daily from '../routes/Daily.jsx';
 
 // components
 import Titlebar from '../components/Titlebar.jsx';
@@ -35,7 +36,13 @@ const App = () =>{
                     <Route path="/session" element={<Session />} />
                     <Route path="/preferences" element={<Preferences />} />
                     <Route path="/testing" element={<Testing />} />
+                    <Route path="/daily" element={<Daily />} />
                     <Route path="/testingtwo" element={<TestingTwo scriptId="test" onDone={(flags)=>{/* ... */}} />} />
+                    <Route path="/story_day_1" element={<TestingTwo scriptId="day_1" onDone={(flags)=>{/* ... */}} />} />
+                    <Route path="/story_day_2" element={<TestingTwo scriptId="day_2" onDone={(flags)=>{/* ... */}} />} />
+                    <Route path="/story_day_3" element={<TestingTwo scriptId="day_3" onDone={(flags)=>{/* ... */}} />} />
+                    <Route path="/story_day_4" element={<TestingTwo scriptId="day_4" onDone={(flags)=>{/* ... */}} />} />
+                    <Route path="/story_day_5" element={<TestingTwo scriptId="day_5" onDone={(flags)=>{/* ... */}} />} />
                 </Routes>
             </div>
         </HashRouter>

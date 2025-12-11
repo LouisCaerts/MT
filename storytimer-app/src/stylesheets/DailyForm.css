@@ -1,0 +1,87 @@
+#dailyFormContainer {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: #fff;
+    text-align: start;
+    align-items: center;
+
+    overflow-y: auto;
+}
+
+#dailyFormContainer h2 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: var(--color-theme-dark);
+}
+
+#dailyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.daily-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-theme-black);
+}
+
+.daily-textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    font-size: 0.95rem;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: var(--color-theme-secondary);
+    color: var(--color-theme-black);
+}
+
+.daily-textarea:focus {
+    outline: none;
+    border-color: #6a9fff;
+    background-color: var(--color-theme-secondary);
+}
+
+.daily-select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: var(--color-theme-secondary);
+    color: var(--color-theme-black);
+}
+
+.daily-select:focus {
+    outline: none;
+    border-color: #6a9fff;
+    background-color: var(--color-theme-secondary);
+}
+
+#dailySubmitButton {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: var(--color-theme-normal);
+    color: #000;
+    transition: background-color 0.2s ease;
+}
+
+#dailySubmitButton:hover {
+    background-color: var(--color-theme-light);
+}
+
+#dailySubmitButton:active {
+    background-color: var(--color-theme-normal);
+}

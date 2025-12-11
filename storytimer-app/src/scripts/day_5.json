@@ -8,7 +8,7 @@
       "speaker": "Birb",
       "text": "We did it [username]! We caught Chickita!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n2"
     },
     "n2": {
@@ -24,7 +24,7 @@
       "speaker": "Birb",
       "text": "Why would you try to sabotage me Chickita? I thought we were friends?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n4"
     },
     "n4": {
@@ -40,7 +40,7 @@
       "speaker": "Birb",
       "text": "You got... bored?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n6"
     },
     "n6": {
@@ -48,7 +48,7 @@
       "speaker": "Birb",
       "text": "THAT'S THE REASON?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "n7"
     },
     "n7": {
@@ -72,7 +72,7 @@
       "speaker": "Birb",
       "text": "I can't believe it...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "c1"
     },
     "c1": {
@@ -80,7 +80,7 @@
       "speaker": "Birb",
       "text": "What do you think about this?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "choices": [
         {
           "text": "Yep. She's crazy.",
@@ -125,7 +125,7 @@
       "speaker": "Birb",
       "text": "Mr Owliver!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n14"
     },
     "n14": {
@@ -149,7 +149,7 @@
       "speaker": "Birb",
       "text": "*gulp* I'm nervous...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "c2"
     },
     "c2": {
@@ -157,7 +157,7 @@
       "speaker": "Birb",
       "text": "What should I do?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "choices": [
         {
           "text": "You can do it!",
@@ -178,7 +178,7 @@
       "speaker": "Birb",
       "text": "You're right, thanks [username]!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n20"
     },
     "n18": {
@@ -186,7 +186,7 @@
       "speaker": "Birb",
       "text": "... No thanks.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n20"
     },
     "n19": {
@@ -194,7 +194,7 @@
       "speaker": "Birb",
       "text": "You make it sound tempting!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n20"
     },
     "n20": {
@@ -202,7 +202,7 @@
       "speaker": "Birb",
       "text": "I want to see this through. I'm going in! Wish me luck!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "end"
     }
   }

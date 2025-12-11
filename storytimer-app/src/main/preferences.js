@@ -51,6 +51,14 @@ const preferences = new Store({
             default: 30,
             minimum: 1,
             maximum: 599
+        },
+        username: {
+            type: 'string',
+            default: 'Buddy'
+        },
+        group: {
+            type: 'string',
+            default: 'A'
         }
     }
 });

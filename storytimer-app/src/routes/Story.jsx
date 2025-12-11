@@ -42,6 +42,33 @@ function evalCond(expr, flags) {
     }
 }
 
+function injectUsernameIntoScript(script, username) {
+    const s = JSON.parse(JSON.stringify(script)); // clone
+
+    function sub(str) {
+        return typeof str === "string"
+            ? str.replace(/\[username\]/g, username)
+            : str;
+    }
+
+    if (s.title) s.title = sub(s.title);
+
+    for (const node of Object.values(s.nodes || {})) {
+        if (node.text) node.text = sub(node.text);
+        if (node.speaker) node.speaker = sub(node.speaker);
+        if (node.prompt) node.prompt = sub(node.prompt);
+        if (node.choices) {
+            node.choices = node.choices.map(c => ({
+                ...c,
+                text: sub(c.text)
+            }));
+        }
+    }
+
+    return s;
+}
+
+
 export default function Story({ scriptId = "none", onDone = () => {}, initialFlags = {} }) {
     // 1) state hoojks
     const [script, setScript] = useState(null);
@@ -53,17 +80,24 @@ export default function Story({ scriptId = "none", onDone = () => {}, initialFla
     useEffect(() => {
         if (!scriptId || scriptId === "none") return;
         let cancelled = false;
+
         (async () => {
-        try {
-            const s = await loadScript(scriptId);
-            if (!cancelled) {
-                setScript(s);
-                setNodeId(s.start);
+            try {
+                const scriptFile = await loadScript(scriptId);
+                const prefs = await window.api.preferences.getAll();
+
+                const username = prefs?.username?.trim() || "Buddy";
+                const finalScript = injectUsernameIntoScript(scriptFile, username);
+
+                if (!cancelled) {
+                    setScript(finalScript);
+                    setNodeId(finalScript.start);
+                }
+            } catch (e) {
+                if (!cancelled) setError(e);
             }
-        } catch (e) {
-            if (!cancelled) setError(e);
-        }
         })();
+
         return () => { cancelled = true; };
     }, [scriptId]);
 

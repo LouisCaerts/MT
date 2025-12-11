@@ -8,7 +8,7 @@
       "speaker": "Birb",
       "text": "All right [username]! We finished all our work on time to come up with a plan!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n2"
     },
     "n2": {
@@ -16,7 +16,7 @@
       "speaker": "Birb",
       "text": "Mr Owliver thinks we broke the rules, when we were just investigating a threat!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "c1"
     },
     "c1": {
@@ -24,7 +24,7 @@
       "speaker": "Birb",
       "text": "But what can we do to fix this?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "choices": [
         {
           "text": "We could send a fruit basket to Mr Owliver?",
@@ -45,7 +45,7 @@
       "speaker": "Birb",
       "text": "Would it come across as bribing though?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n6"
     },
     "n4": {
@@ -53,7 +53,7 @@
       "speaker": "Birb",
       "text": "I suppose that could work... but I'm already so tired!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "n6"
     },
     "n5": {
@@ -61,7 +61,7 @@
       "speaker": "Birb",
       "text": "You really think so??",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "n6"
     },
     "n6": {
@@ -93,7 +93,7 @@
       "speaker": "Birb",
       "text": "...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n10"
     },
     "n10": {
@@ -101,7 +101,7 @@
       "speaker": "Birb",
       "text": "!!!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "n11"
     },
     "n11": {
@@ -109,7 +109,7 @@
       "speaker": "Birb",
       "text": "I never told anyone other than [username] I am being threatened!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "n12"
     },
     "n12": {
@@ -117,7 +117,7 @@
       "speaker": "Birb",
       "text": "Chickita! Are you doing this??",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "n13"
     },
     "n13": {
@@ -133,7 +133,7 @@
       "speaker": "Birb",
       "text": "She's running away!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "c2"
     },
     "c2": {
@@ -141,7 +141,7 @@
       "speaker": "Birb",
       "text": "What should we do?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "choices": [
         {
           "text": "Let's run after her!",
@@ -162,7 +162,7 @@
       "speaker": "Birb",
       "text": "Good idea!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n16"
     },
     "n16": {
@@ -170,7 +170,7 @@
       "speaker": "Birb",
       "text": "We just have to catch her and this will all be over!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n17"
     },
     "n17": {
@@ -178,7 +178,7 @@
       "speaker": "Birb",
       "text": "One more day of hard work [username], we can do this!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "end"
     }
   }

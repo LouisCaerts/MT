@@ -13,10 +13,11 @@ export function initDb() {
     db.pragma('journal_mode = WAL');
     db.pragma('synchronous = NORMAL');
 
-    // test table
+    // notes table
     db.exec(`
         CREATE TABLE IF NOT EXISTS notes (
             id INTEGER PRIMARY KEY,
+            date DATE NOT NULL UNIQUE,
             created_at INTEGER NOT NULL,
             text TEXT NOT NULL
         );
@@ -45,6 +46,18 @@ export function initDb() {
             date DATE NOT NULL UNIQUE,
             goal_min INTEGER NOT NULL,
             focused_min INTEGER NOT NULL
+        );
+    `);
+
+    // dailies table
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS dailies (
+            id INTEGER PRIMARY KEY,
+            date DATE NOT NULL UNIQUE,
+            work_done TEXT,
+            impact INTEGER NOT NULL,
+            memorable TEXT,
+            motivation TEXT
         );
     `);
 

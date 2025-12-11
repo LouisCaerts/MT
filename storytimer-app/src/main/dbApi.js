@@ -79,6 +79,40 @@ export function buildDataApi(db) {
         WHERE id = ?
     `);
 
+    // dailies
+    const insertDaily = db.prepare(`
+        INSERT INTO dailies (date, work_done, impact, memorable, motivation)
+        VALUES (@date, @work_done, @impact, @memorable, @motivation)
+        ON CONFLICT(date) DO UPDATE SET
+            work_done  = excluded.work_done,
+            impact     = excluded.impact,
+            memorable  = excluded.memorable,
+            motivation = excluded.motivation
+    `);
+
+    const getDailyByDate = db.prepare(`
+        SELECT *
+        FROM dailies
+        WHERE date = ?
+    `);
+
+    const listDailies = db.prepare(`
+        SELECT *
+        FROM dailies
+        ORDER BY date ASC
+    `);
+
+    const patchDailyByDate = db.prepare(`
+        UPDATE dailies
+        SET
+            work_done  = COALESCE(@work_done, work_done),
+            impact     = COALESCE(@impact, impact),
+            memorable  = COALESCE(@memorable, memorable),
+            motivation = COALESCE(@motivation, motivation)
+        WHERE date = @date
+    `);
+
+
     return {
 
         // test notes
@@ -168,5 +202,43 @@ export function buildDataApi(db) {
             const row = sumFocusedByStartRange.get({ from_ms: fromMs, to_ms: toMs });
             return row?.total_sec ?? 0;
         },
+
+        // dailies
+        setDaily({ date, work_done, impact, memorable, motivation }) {
+            if (!date) throw new Error('setDaily: date is required');
+            if (impact == null) throw new Error('setDaily: impact is required');
+
+            insertDaily.run({
+                date,
+                work_done: work_done ?? null,
+                impact: Math.round(impact),
+                memorable: memorable ?? null,
+                motivation: motivation ?? null,
+            });
+
+            return getDailyByDate.get(date);
+        },
+        updateDaily(patch = {}) {
+            const { date } = patch;
+            if (!date) throw new Error('updateDaily: date is required');
+
+            patchDailyByDate.run({
+                date,
+                work_done: patch.work_done,
+                impact: patch.impact,
+                memorable: patch.memorable,
+                motivation: patch.motivation,
+            });
+
+            return getDailyByDate.get(date);
+        },
+        getDaily(date) {
+            if (!date) throw new Error('getDaily: date is required');
+            return getDailyByDate.get(date);
+        },
+        getDailies() {
+            return listDailies.all();
+        },
+
     };
 }

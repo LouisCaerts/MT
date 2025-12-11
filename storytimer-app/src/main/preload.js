@@ -55,3 +55,10 @@ contextBridge.exposeInMainWorld('days', {
     setGoal: ({ date, goal_min }) =>
         ipcRenderer.invoke('day:setGoal', { date, goal_min }),
 });
+
+contextBridge.exposeInMainWorld('daily', {
+    get:    (dateKey)        => ipcRenderer.invoke('daily:get', dateKey),
+    getAll: ()               => ipcRenderer.invoke('daily:getAll'),
+    set:    (dateKey, vals)  => ipcRenderer.invoke('daily:set', dateKey, vals),
+    update: (patch = {})     => ipcRenderer.invoke('daily:update', patch),
+});

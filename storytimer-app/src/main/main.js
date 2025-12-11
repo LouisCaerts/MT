@@ -182,6 +182,10 @@ else {
 	ipcMain.handle('day:addFocus', (_e, payload) => api.addFocusMinutes(payload));
 	ipcMain.handle('day:list', (_e) => api.getDays());
 	ipcMain.handle('day:setGoal', (_e, payload) => api.setDayGoal(payload));
+	ipcMain.handle('daily:get', (_e, date) => api.getSurvey(date));
+	ipcMain.handle('daily:getAll', () => api.getSurveys());
+	ipcMain.handle('daily:set', (_e, date, values) => api.setSurvey({ date, ...values }));
+	ipcMain.handle('daily:update', (_e, patch) => api.updateSurvey(patch));
 
 	// launch app when ready
 	app.whenReady().then(() => {

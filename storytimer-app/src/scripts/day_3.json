@@ -8,7 +8,7 @@
       "speaker": "Birb",
       "text": "Hey [username]! Great work today!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "c1"
     },
     "c1": {
@@ -16,7 +16,7 @@
       "speaker": "Birb",
       "text": "Sorry if I seem sad. I just have a bad feeling about this mysterious letter...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "choices": [
         {
           "text": "It's okay to feel down, I'm here for you!",
@@ -37,7 +37,7 @@
       "speaker": "Birb",
       "text": "Thank you. You're an awesome friend!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n5"
     },
     "n3": {
@@ -45,7 +45,7 @@
       "speaker": "Birb",
       "text": "You're right! With your friendship I can do anything!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n5"
     },
     "n4": {
@@ -53,7 +53,7 @@
       "speaker": "Birb",
       "text": "That's not gonna help!... But yes I would like some chocolate...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n5"
     },
     "n5": {
@@ -61,7 +61,7 @@
       "speaker": "Birb",
       "text": "Anyway, Chickita said she saw someone carrying that letter around here... wait there is another letter here look!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n6"
     },
     "n6": {
@@ -69,7 +69,7 @@
       "speaker": "Birb",
       "text": "It's empty!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "n7"
     },
     "n7": {
@@ -85,7 +85,7 @@
       "speaker": "Birb",
       "text": "But, I was only looking for--",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "n9"
     },
     "n9": {
@@ -107,9 +107,9 @@
     "n11": {
       "type": "line",
       "speaker": "Birb",
-      "text": "[username]can you believe this?!",
+      "text": "[username] can you believe this?!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "c2"
     },
     "c2": {
@@ -117,7 +117,7 @@
       "speaker": "Birb",
       "text": "What do you think is going on?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "choices": [
         {
           "text": "Crowley planned all of this!",
@@ -136,9 +136,9 @@
     "n12": {
       "type": "line",
       "speaker": "Birb",
-      "text": "Do you think so?? IT could be true...",
+      "text": "Do you think so?? It could be true...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n13"
     },
     "n13": {
@@ -146,7 +146,7 @@
       "speaker": "Birb",
       "text": "Please help me out a little longer to get to the bottom of this!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "end"
     }
   }

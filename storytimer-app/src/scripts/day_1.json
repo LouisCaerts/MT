@@ -8,7 +8,7 @@
       "speaker": "Birb",
       "text": "I did it! I actually cleared all my emails and finished that report! We're amazing [username]!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n2"
     },
     "n2": {
@@ -16,7 +16,7 @@
       "speaker": "Birb",
       "text": "Oh look there is Crowley, my work friend. He's a bit silly.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n3"
     },
     "n3": {
@@ -32,7 +32,7 @@
       "speaker": "Birb",
       "text": "Yes, it was great thanks to the help [username] gave me! How about you Crowley?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n5"
     },
     "n5": {
@@ -48,7 +48,7 @@
       "speaker": "Birb",
       "text": "Why would you...?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_angry.png",
       "next": "n7"
     },
     "n7": {
@@ -64,7 +64,7 @@
       "speaker": "Birb",
       "text": "And there he goes. But what is this letter? I'll read it.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n9"
     },
     "n9": {
@@ -72,7 +72,7 @@
       "speaker": "Birb",
       "text": "Strange, it just says \"Prepare yourself for your downfall Birb\"... Do you think I should be worried?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "next": "c1"
     },
     "c1": {
@@ -80,7 +80,7 @@
       "speaker": "Birb",
       "text": "Do you think I should be worried?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "choices": [
         {
           "text": "Yes, you should move to a different country!",
@@ -101,7 +101,7 @@
       "speaker": "Birb",
       "text": "I can't afford that...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n13"
     },
     "n11": {
@@ -109,7 +109,7 @@
       "speaker": "Birb",
       "text": "I hope so... still it's strange...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n13"
     },
     "n12": {
@@ -117,7 +117,7 @@
       "speaker": "Birb",
       "text": "Not to me...",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n13"
     },
     "n13": {
@@ -125,7 +125,7 @@
       "speaker": "Birb",
       "text": "Anyway, I can ask my colleagues next time. Let's get some well deserved rest for a good day first!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "end"
     }
   }

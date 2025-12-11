@@ -11,3 +11,17 @@ export const DaysAPI = {
     list:     ()                   => window.days.list(),
     setGoal:  ({ date, goal_min }) => window.days.setGoal({ date, goal_min }),
 };
+
+export const SurveysAPI = {
+    get:     (k)        => window.api.surveys.get(k),
+    getAll:  ()         => window.api.surveys.getAll(),
+    set:     (k, v)     => window.api.surveys.set(k, v),
+    update:  (patch={}) => window.api.surveys.update(patch),
+}
+
+export const DailyAPI = {
+    get:     (k)        => window.daily.get(k),
+    getAll:  ()         => window.daily.getAll(),
+    set:     (k, v)     => window.daily.set(k, v),
+    update:  (patch={}) => window.daily.update(patch),
+};

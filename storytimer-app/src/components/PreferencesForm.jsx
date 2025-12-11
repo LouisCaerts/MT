@@ -34,7 +34,9 @@ export default function PreferencesForm() {
         friGoal: 120,
         satGoal: 120,
         sunGoal: 120,
-        sessionLength: 30
+        sessionLength: 30,
+        username: "Buddy",
+        group: 'A'
     });
 
 	useEffect(() => {
@@ -50,6 +52,8 @@ export default function PreferencesForm() {
 				satGoal: all.satGoal ?? 120,
 				sunGoal: all.sunGoal ?? 120,
 				sessionLength: all.sessionLength ?? 30,
+                username: all.username ?? "Buddy",
+                group: all.group ?? 'A',
 			});
 		});
 		return () => { mounted = false; };
@@ -76,6 +80,8 @@ export default function PreferencesForm() {
             satGoal: clamp(Number(form.satGoal), 0, 1440),
             sunGoal: clamp(Number(form.sunGoal), 0, 1440),
             sessionLength: clamp(Number(form.sessionLength), 0, 599),
+            username: form.username?.trim() || "Buddy",
+            group: form.group?.trim() || 'A'
         };
 
         // 1) Save preferences
@@ -160,6 +166,22 @@ export default function PreferencesForm() {
                     <label className="preferencesFormLabel">
                         <span>Session length:</span>
                         <span className="preferencesFormInputSpan"><input type="number" name="sessionLength" min={0} max={1440} value={form.sessionLength} onChange={handleChange}/> minutes</span>
+                    </label>
+                </div>
+
+                <p id="preferencesFormSubtitle">What would you like to be called?</p>
+                <div  id="preferencesFormLabelsContainer">
+                    <label className="preferencesFormLabel">
+                        <span>My name is </span>
+                        <span className="preferencesFormInputSpan"><input type="text" name="username" placeholder='Buddy' value={form.username} onChange={handleChange}/></span>
+                        <span> | Assigned group: </span>
+                        <span className="preferencesFormInputSpan">
+                            <select type="text" name='group' value={form.group} onChange={handleChange}>
+                            <option value="" disabled>Select group</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            </select></span>
+                        <datalist id='groupOptions'> <option value='A' /><option value='B' /> </datalist>
                     </label>
                 </div>
 

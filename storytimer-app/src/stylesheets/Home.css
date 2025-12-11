@@ -1,9 +1,26 @@
+#sidebarsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
 #homeContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 20px;
-    gap: 50px;;
+    justify-content: start;
+    margin-top: 20px;
+    gap: 70px;
+    flex: 2;
+}
+
+#leftbarContainer, 
+#rightbarContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 
 .toast {
@@ -25,4 +42,54 @@
   10% { opacity: 1; transform: translate(-50%, 0px); }
   90% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, 20px); }
+}
+
+
+
+
+#rightbarContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+}
+
+#rightbarLinksContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.rightbarLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity 0.2s ease;
+}
+
+.rightbarLink:hover {
+  opacity: 0.7;
+}
+
+.rightbarLink.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Hide all lock icons by default */
+.rightbarLink .lockIcon {
+  visibility: hidden;
+}
+
+/* Show lock icon only when button has .disabled */
+.rightbarLink.disabled .lockIcon {
+  visibility: visible;
 }

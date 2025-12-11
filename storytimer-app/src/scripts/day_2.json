@@ -8,7 +8,7 @@
       "speaker": "Birb",
       "text": "Another great day [username], we are unstoppable!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n2"
     },
     "n2": {
@@ -16,7 +16,7 @@
       "speaker": "Birb",
       "text": "Anyway, remember that mysterious letter we found? Let's go ask some people about it.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n3"
     },
     "n3": {
@@ -24,7 +24,7 @@
       "speaker": "Birb",
       "text": "Hey Crowley, do you know who delivered this letter?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n4"
     },
     "n4": {
@@ -40,7 +40,7 @@
       "speaker": "Birb",
       "text": "Uhm... okay.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n6"
     },
     "n6": {
@@ -48,7 +48,7 @@
       "speaker": "Birb",
       "text": "Chickita, have you seen this letter before?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_neutral.png",
       "next": "n7"
     },
     "n7": {
@@ -72,7 +72,7 @@
       "speaker": "Birb",
       "text": "Hmmm, we're not supposed to go there because it could be dangerous. What do you think [username]?",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_stressed.png",
       "choices": [
         {
           "text": "We must investigate!",
@@ -93,7 +93,7 @@
       "speaker": "Birb",
       "text": "You're right! Next time we will head out for our investigation!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n12"
     },
     "n10": {
@@ -101,7 +101,7 @@
       "speaker": "Birb",
       "text": "It does sound scary... we'll be very careful, but we can quickly look around.",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_sad.png",
       "next": "n12"
     },
     "n11": {
@@ -109,7 +109,7 @@
       "speaker": "Birb",
       "text": "Good idea! That's the best of both worlds!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "n12"
     },
     "n12": {
@@ -117,8 +117,9 @@
       "speaker": "Birb",
       "text": "Wow, this is turning into a real investigation! But I know we can do it together [username]!",
       "side": "left",
-      "avatar": "../images/avatars/birb.png",
+      "avatar": "../images/avatars/birb_happy.png",
       "next": "end"
     }
   }
 }
+
