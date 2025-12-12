@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('timerBridge', {
 	onComplete: (cb) => {
 		const handler = () => cb();
 		ipcRenderer.on('timer:complete', handler);
-		return () => ipcRenderer.removeListener('timer:complete', handler);
+		return () => {ipcRenderer.removeListener('timer:complete', handler); ipcRenderer.invoke('timer:bringBackApp');}
 	},
 });
 
@@ -54,6 +54,10 @@ contextBridge.exposeInMainWorld('days', {
         ipcRenderer.invoke('day:list'),
     setGoal: ({ date, goal_min }) =>
         ipcRenderer.invoke('day:setGoal', { date, goal_min }),
+	getMinutes: ({ date }) =>
+		ipcRenderer.invoke('day:getMinutes', { date }),
+	get: ( date ) => 
+		ipcRenderer.invoke('day:get', date),
 });
 
 contextBridge.exposeInMainWorld('daily', {

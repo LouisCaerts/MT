@@ -9,7 +9,7 @@
 
 #dailyBar {
     position: relative;
-    width: 80%;
+    width: 45%;
     height: 25px;
 
     background: var(--color-theme-white);

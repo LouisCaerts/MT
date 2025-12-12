@@ -2,9 +2,11 @@ import Timer from '../components/Timer.jsx';
 
 import { useEffect, useState, useRef } from "react";
 import { PreferencesAPI } from '../main/api';
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [length, setLength] = useState(30);
+	const navigate = useNavigate();
 	
 	useEffect(() => {
 		let abort = false;
@@ -22,7 +24,7 @@ export default function Home() {
 
     return (
       	<div id="sessionContainer">
-			<Timer duration={length * 60} onComplete={() => console.log("done")} />
+			<Timer duration={length * 60} onComplete={() => navigate("/")} />
       	</div>
     )
 }

@@ -12,7 +12,7 @@ const todayISO = () => {
     return `${yyyy}-${mm}-${dd}`;
 };
 
-export default function Timer({ duration = 90,  autoStart = false, onComplete }) 
+export default function Timer({ duration = 90,  autoStart = true, onComplete }) 
 {
     // states
     const [isRunning, setIsRunning] = useState(autoStart);
@@ -78,6 +78,7 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
                     console.error('update days focused_min failed', e);
                 }
             }
+
         } catch (e) {
             console.error('finish session failed', e);
         } finally {
@@ -228,7 +229,7 @@ export default function Timer({ duration = 90,  autoStart = false, onComplete })
                 {!isRunning && timeLeft !== duration * 1000 && timeLeft > 0 && (
                     <button onClick={resume} className="timerButton"><Play size={20} /></button>
                 )}
-                <button onClick={reset} className="timerButton"><RotateCcw size={20} /></button>
+                {/* <button onClick={reset} className="timerButton"><RotateCcw size={20} /></button> */}
             </div>
         </div>
     );

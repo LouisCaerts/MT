@@ -1,26 +1,27 @@
 #sidebarsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
   height: 100%;
+}
+
+#rightbarContainer {
+  position: absolute;
+  /* put absolute position in bottom left corner */
+  bottom: 15px;
+  right: 15px;
 }
 
 #homeContainer {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    align-items: center;
     margin-top: 20px;
-    gap: 70px;
     flex: 2;
+    height: 100%;
+    gap: 55px;
 }
 
-#leftbarContainer, 
-#rightbarContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
+#dailyprogressbargap {
+  height: 60px;
 }
 
 .toast {
@@ -44,33 +45,15 @@
   100% { opacity: 0; transform: translate(-50%, 20px); }
 }
 
-
-
-
-#rightbarContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: end;
-}
-
-#rightbarLinksContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
-
 .rightbarLink {
-  display: flex;
-  align-items: center;
   gap: 8px;
   width: 100%;
   border: none;
   background: none;
   font-size: 14px;
-  color: #444;
+  color: var(--color-theme-black);
   cursor: pointer;
-  text-align: left;
+  text-align: end;
   transition: opacity 0.2s ease;
 }
 
@@ -84,12 +67,40 @@
   pointer-events: none;
 }
 
-/* Hide all lock icons by default */
 .rightbarLink .lockIcon {
   visibility: hidden;
 }
 
-/* Show lock icon only when button has .disabled */
 .rightbarLink.disabled .lockIcon {
   visibility: visible;
+}
+
+#dayCountDisplay {
+  text-align: end;
+  margin-right: 5px;
+}
+
+#dayCountNumber {
+  font-size: 10px;
+  margin: 0;
+  font-weight: bold;
+  color: var(--color-theme-black);
+}
+
+.daily-checklist {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+}
+
+.daily-checklist > * {
+  margin: 0px 0px 0px 0px;
+}
+
+.daily-checklist > p > span {
+  margin-right: 5px;
+}
+
+#tasktwo {
+  margin-top: 6px;
 }

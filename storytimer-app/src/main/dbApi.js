@@ -10,6 +10,7 @@ export function buildDataApi(db) {
         LIMIT @limit OFFSET @offset
     `);
 
+    // days
     const insertDay = db.prepare(`
         INSERT INTO days (
             date, goal_min, focused_min
@@ -42,6 +43,14 @@ export function buildDataApi(db) {
         ORDER BY date ASC
     `);
 
+    const getFocusedMinutesForDay = db.prepare(`
+        SELECT COALESCE(focused_min, 0) 
+        AS focused_min 
+        FROM days 
+        WHERE date = ?
+    `);
+
+    // sessions
     const insertSession = db.prepare(`
         INSERT INTO sessions (
             started_at, duration_target_sec, outcome, tz_offset_min
@@ -151,12 +160,22 @@ export function buildDataApi(db) {
         getDays() {
             return listDays.all();
         },
+        getDay(date) {
+            if (!date) throw new Error('getDay: date is required');
+            return getDayByDate.get(date);
+        },
         setDayGoal({ date, goal_min }) {
             if (!date) throw new Error('setDayGoal: date is required');
 
             setDayGoalByDate.run({ date, goal_min: Math.round(goal_min ?? 0) });
 
             return getDayByDate.get(date);
+        },
+        getFocusedMinutes({ date }) {
+            if (!date) throw new Error('getFocusedMinutes: date is required');
+            const row = getFocusedMinutesForDay.get(date);
+
+            return row?.focused_min ?? 0;
         },
 
         // sessions

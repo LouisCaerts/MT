@@ -10,6 +10,7 @@ export const DaysAPI = {
     addFocus: ({ date, minutes })  => window.days.addFocus({ date, minutes }),
     list:     ()                   => window.days.list(),
     setGoal:  ({ date, goal_min }) => window.days.setGoal({ date, goal_min }),
+    get:      ( date )             => window.days.get( date ),
 };
 
 export const SurveysAPI = {

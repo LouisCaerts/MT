@@ -136,6 +136,27 @@ else {
 		armedDeadline = null;
 	}
 
+	// brings main application window to the front of all other windows
+	function bringMainWindowToFront() {
+		console.log('bringing main window to front');
+
+		if (!mainWindow) return;
+
+		// if you hide to tray, the window is often not minimized — it’s hidden
+		if (!mainWindow.isVisible()) mainWindow.show();
+
+		// if minimized, restore first
+		if (mainWindow.isMinimized()) mainWindow.restore();
+
+		// make sure it's actually frontmost
+		mainWindow.setAlwaysOnTop(true);
+		mainWindow.focus();
+
+		// macOS: if you hide the dock icon when tray-running, show it
+		if (process.platform === "darwin") app.dock.show();
+		app.focus({ steal: true });
+	}
+
 	// rearms timer after system resume event
 	powerMonitor.on("resume", () => {
 		if (armedDeadline != null) armTimer(armedDeadline);
@@ -144,6 +165,7 @@ else {
     // main process IPC endpoints for timer controls
     ipcMain.handle("timer:arm", (_e, deadline) => { armTimer(deadline); return true; });
     ipcMain.handle("timer:cancel", () => { cancelTimer(); return true; });
+	ipcMain.handle("timer:bringBackApp", () => {bringMainWindowToFront(); return true; });
 
     // main process IPC endpoints for stoplight controls
     ipcMain.on("win:minimize", () => mainWindow.minimize());
@@ -182,10 +204,12 @@ else {
 	ipcMain.handle('day:addFocus', (_e, payload) => api.addFocusMinutes(payload));
 	ipcMain.handle('day:list', (_e) => api.getDays());
 	ipcMain.handle('day:setGoal', (_e, payload) => api.setDayGoal(payload));
-	ipcMain.handle('daily:get', (_e, date) => api.getSurvey(date));
-	ipcMain.handle('daily:getAll', () => api.getSurveys());
-	ipcMain.handle('daily:set', (_e, date, values) => api.setSurvey({ date, ...values }));
-	ipcMain.handle('daily:update', (_e, patch) => api.updateSurvey(patch));
+	ipcMain.handle('day:getMinutes', (_e, payload) => api.getFocusedMinutes(payload));
+	ipcMain.handle('day:get', (_e, payload) => api.getDay(payload));
+	ipcMain.handle('daily:get', (_e, date) => api.getDaily(date));
+	ipcMain.handle('daily:getAll', () => api.getDailies());
+	ipcMain.handle('daily:set', (_e, date, values) => api.setDaily({ date, ...values }));
+	ipcMain.handle('daily:update', (_e, patch) => api.updateDaily(patch));
 
 	// launch app when ready
 	app.whenReady().then(() => {

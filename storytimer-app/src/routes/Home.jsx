@@ -2,7 +2,7 @@ import '../stylesheets/Home.css';
 
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { PreferencesAPI, DaysAPI } from '../main/api';
+import { PreferencesAPI, DaysAPI, DailyAPI } from '../main/api';
 import { Lock } from "lucide-react";
 
 import WeeklyProgress from '../components/WeeklyProgress';
@@ -44,6 +44,9 @@ export default function Home() {
 	const [completedCount, setCompletedCount] = useState(0);
 	const [completedCountTwo, setCompletedCountTwo] = useState(0);
 	const [group, setGroup] = useState('');
+	const [didFocusToday, setDidFocusToday] = useState(false);
+	const [doneDaily, setDoneDaily] = useState(false);
+	const [doneGoal, setDoneGoal] = useState(false);
 
 	// midnight remount
 	useEffect(() => {
@@ -133,6 +136,32 @@ export default function Home() {
 			}
 		};
 
+		const useDidFillDailyReflection = async () => {
+			try {
+				const dateKey = todayISO();
+				const daily = await DailyAPI.get(dateKey);
+				if (abort) return;
+				setDoneDaily(!!daily);
+				console.log("Checked daily reflection:", doneDaily);
+			} catch (e) {
+				console.error("Failed to check daily reflection", e);
+				return;
+			}
+		}
+
+		const useDidFinishGoal = async () => {
+			try {
+				const dateKey = todayISO();
+				console.log("Checking goal completion for", dateKey);
+				const day = await DaysAPI.get(dateKey);
+				if (abort) return;
+				setDoneGoal(day.focused_min >= day.goal_min);
+			} catch (e) {
+				console.error("Failed to check goal completion", e);
+				return;
+			}
+		}
+
 		const arm = () => {
 			if (timerRef.current) clearTimeout(timerRef.current);
 			const ms = Math.max(0, nextMidnight() - new Date());
@@ -147,9 +176,11 @@ export default function Home() {
 		loadToday();
 		loadTodayFocus();
 		loadCompletedDays();
+		useDidFillDailyReflection();
+		useDidFinishGoal();
 		arm();
 
-		const onFocus = () => { loadToday(); loadTodayFocus(); loadCompletedDays(); arm(); };
+		const onFocus = () => { loadToday(); loadTodayFocus(); loadCompletedDays(); useDidFillDailyReflection(); useDidFinishGoal(); arm(); };
 		window.addEventListener('focus', onFocus);
 
 		return () => {
@@ -158,6 +189,15 @@ export default function Home() {
 			if (timerRef.current) clearTimeout(timerRef.current);
 		};
 	}, []);
+
+	useEffect(() => {
+		if ( todayFocusMin > 0 ) {
+			setDidFocusToday(true);
+		}
+		else {
+			setDidFocusToday(false);
+		}
+	}, [todayFocusMin]);
 
 	// saved preferences notification
 	const location = useLocation();
@@ -174,77 +214,108 @@ export default function Home() {
 
 	return (
 		<div id="sidebarsContainer">
-			<div id="leftbarContainer"></div>
+
 
 			<div id="homeContainer">
 				<WeeklyProgress day={todayKey} />
 				<DailyProgress key={todayKey} goal={goal} progress={todayFocusMin} />
 
 				{toast && <div className="toast">{toast}</div>}
+
+				<div class="daily-checklist">
+					<h2 class="daily-checklist__title">Daily study tasks:</h2>
+					<p>
+						<span class="daily-checklist__check" role="checkbox" aria-checked="false" aria-label="Complete at least one focus session">
+							{ didFocusToday ? '☑' : '☐' }
+						</span>
+						<span class="daily-checklist__text">
+							Complete at least one focus session
+						</span>
+					</p>
+					<p id="tasktwo">
+						<span class="daily-checklist__check" role="checkbox" aria-checked="false" aria-label="Fill in the daily reflection">
+							{ doneDaily ? '☑' : '☐' }
+						</span>
+						<span class="daily-checklist__text" >
+							<Link to="/daily">Fill in the daily reflection</Link>
+						</span>
+					</p>
+					<p id="tasktwo">
+						<span class="daily-checklist__check" role="checkbox" aria-checked="false" aria-label="Reach your goal">
+							{ doneGoal ? '☑' : '☐' }
+						</span>
+						<span class="daily-checklist__text" >
+							(Optional) Complete your focus goal of {goal} minutes
+						</span>
+					</p>
+				</div>
+
 			</div>
 			
 			<div id="rightbarContainer">
 				<div id="rightbarLinksContainer">
-					
 
-					{group === "A" && dayCount > 5 && (
+					{group === "A" && dayCount >= 5 && (
 					<div id="groupAContainer">
 						<button className={`rightbarLink ${completedCountTwo >= 1 ? '' : 'disabled'}`} disabled={completedCountTwo < 1}>
 							<Lock className="lockIcon" size={16} />
-							Day 1
+							<Link to="/story_day_1">Day 1 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCountTwo >= 2 ? '' : 'disabled'}`} disabled={completedCountTwo < 2}>
 							<Lock className="lockIcon" size={16} />
-							Day 2
+							<Link to="/story_day_2">Day 2 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCountTwo >= 3 ? '' : 'disabled'}`} disabled={completedCountTwo < 3}>
 							<Lock className="lockIcon" size={16} />
-							Day 3
+							<Link to="/story_day_3">Day 3 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCountTwo >= 4 ? '' : 'disabled'}`} disabled={completedCountTwo < 4}>
 							<Lock className="lockIcon" size={16} />
-							Day 4
+							<Link to="/story_day_4">Day 4 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCountTwo >= 5 ? '' : 'disabled'}`} disabled={completedCountTwo < 5}>
 							<Lock className="lockIcon" size={16} />
-							Day 5
+							<Link to="/story_day_5">Day 5 story</Link>
 						</button>
 					</div>
 					)}
 
-					{group === "B" && dayCount <= 5 && (
+					{group === "B" && dayCount < 6 && (
 					<div id="groupBContainer">
 						<button className={`rightbarLink ${completedCount >= 1 ? '' : 'disabled'}`} disabled={completedCount < 1}>
 							<Lock className="lockIcon" size={16} />
-							<Link to="/story_day_1">Day 1</Link>
+							<Link to="/story_day_1">Day 1 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCount >= 2 ? '' : 'disabled'}`} disabled={completedCount < 2}>
 							<Lock className="lockIcon" size={16} />
-							<Link to="/story_day_2">Day 2</Link>
+							<Link to="/story_day_2">Day 2 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCount >= 3 ? '' : 'disabled'}`} disabled={completedCount < 3}>
 							<Lock className="lockIcon" size={16} />
-							<Link to="/story_day_3">Day 3</Link>
+							<Link to="/story_day_3">Day 3 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCount >= 4 ? '' : 'disabled'}`} disabled={completedCount < 4}>
 							<Lock className="lockIcon" size={16} />
-							<Link to="/story_day_4">Day 4</Link>
+							<Link to="/story_day_4">Day 4 story</Link>
 						</button>
 
 						<button className={`rightbarLink ${completedCount >= 5 ? '' : 'disabled'}`} disabled={completedCount < 5}>
 							<Lock className="lockIcon" size={16} />
-							<Link to="/story_day_5">Day 5</Link>
+							<Link to="/story_day_5">Day 5 story</Link>
 						</button>
 					</div>
 					)}
-
+					
+					<div id="dayCountDisplay">
+						<p id="dayCountNumber">Days you have used the app: {dayCount}</p>
+					</div>
 
 				</div>
 			</div>
