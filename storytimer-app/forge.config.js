@@ -30,7 +30,7 @@ module.exports = {
     },
   ],
   plugins: [
-    new AutoUnpackNativesPlugin({}),
+    // new AutoUnpackNativesPlugin({}),
     {
       name: '@electron-forge/plugin-vite',
       config: {

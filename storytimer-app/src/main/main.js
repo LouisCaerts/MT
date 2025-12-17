@@ -11,7 +11,7 @@ let mainWindow      = null;
 let mainTray        = null;
 let armedTimer      = null;
 let armedDeadline   = null;
-let quitting        = false;
+let isQuitting 		= false;
 
 // definitions
 const gotTheLock = app.requestSingleInstanceLock()
@@ -31,34 +31,34 @@ if (started) { app.quit(); }
 
 // single instance lock
 if (!gotTheLock) {
-    app.quit();
-} else {
+  	app.quit();
+} 
+else {
 
-    //---------------------------------------------
-    // Setup clean cross-platform window lifecycle
-    //---------------------------------------------
+	// focus primary window when user tries to reopen app while it is already running
+	app.on('second-instance', () => {
+		if (mainWindow) {
+			if (mainWindow.isMinimized()) mainWindow.restore();
+			mainWindow.show();
+			mainWindow.focus();
+		}
+	})
 
-    // macOS: don't quit when last window closes
-    app.on('window-all-closed', () => {
-        // do nothing on macOS
-        // on Windows/Linux we want the tray to keep the app alive
-    });
+	// macOS: re-open app when dock icon is clicked
+	app.on("activate", () => {
+		if (!mainWindow) return;
 
-    // need to allow quit
-    app.on('before-quit', () => {
-        quitting = true;
-    });
+		if (mainWindow.isMinimized()) mainWindow.restore();
+		mainWindow.show();
+		mainWindow.focus();
+	});
 
-    // macOS dock click restores window
-    app.on('activate', () => {
-        if (mainWindow) mainWindow.show();
-    });
+	app.on("before-quit", () => {
+		isQuitting = true;
+	});
 
 
-    //---------------------------------------------
-    // Main window creation
-    //---------------------------------------------
-    const createWindow = () => {
+  	const createWindow = () => {
 
         const primaryDisplay = screen.getPrimaryDisplay();
         const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
@@ -92,45 +92,41 @@ if (!gotTheLock) {
             mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
         }
 
-        // correct close behavior (hide, unless quitting)
-        mainWindow.on('close', (event) => {
-            if (!quitting) {
-                event.preventDefault();
-                mainWindow.hide();
-            }
-        });
+		// hide app on closing instead of fully exiting
+		mainWindow.on("close", (event) => {
+			if (process.platform === "darwin" && !isQuitting) {
+				event.preventDefault();
+				mainWindow.hide();
+			}
+		});
 
-        if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-            mainWindow.webContents.openDevTools();
-        }
 
-        //---------------------------------------------
-        // Tray with cross-platform restore behavior
-        //---------------------------------------------
-        const contextMenu = Menu.buildFromTemplate([
-            { label: 'Open', click: () => openMainWindow() },
-            { label: 'Exit', click: () => { quitting = true; app.quit(); } }
-        ]);
+		// open devtools alongside app (development mode only)
+		if (MAIN_WINDOW_VITE_DEV_SERVER_URL) { mainWindow.webContents.openDevTools(); }
+		
+		// setup tray icon and context menu
+		const contextMenu = Menu.buildFromTemplate([
+			{
+				label: 'Open', 
+				click: () => { mainWindow.show(); }
+			},
+			{
+				label: 'Exit', 
+				click: () => { isQuitting = true; app.quit(); }
+			}
+		]);
+		mainTray = new Tray(mainTrayIcon);
+		mainTray.setToolTip('Storytimer');
+		mainTray.setContextMenu(contextMenu);
+	
+		// enable app reopening by double-clicking tray icon
+		mainTray.on("click", () => {
+			if (!mainWindow) return;
+			if (mainWindow.isVisible()) mainWindow.hide();
+			else { mainWindow.show(); mainWindow.focus(); }
+		});
 
-        mainTray = new Tray(mainTrayIcon);
-        mainTray.setToolTip('Storytimer');
-        mainTray.setContextMenu(contextMenu);
-
-        // Windows native double-click
-        mainTray.on('double-click', () => openMainWindow());
-
-        // macOS double-click via clickCount
-        mainTray.on('click', (event, bounds, position) => {
-            if (position?.clickCount === 2) openMainWindow();
-        });
-
-        function openMainWindow() {
-            mainWindow.setBounds({ x, y, width: appWindowWidth, height: appWindowHeight });
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.show();
-            mainWindow.focus();
-        }
-    };
+  	};
 
 
     //---------------------------------------------
