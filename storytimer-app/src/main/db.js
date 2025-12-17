@@ -33,10 +33,21 @@ export function initDb() {
             duration_target_sec INTEGER NOT NULL,
             duration_actual_sec INTEGER,
             outcome TEXT NOT NULL,
-            tz_offset_min INTEGER NOT NULL
+            tz_offset_min INTEGER NOT NULL,
+            created_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000),
+            updated_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000)
         );
         CREATE INDEX IF NOT EXISTS idx_sessions_started ON sessions(started_at);
         CREATE INDEX IF NOT EXISTS idx_sessions_outcome ON sessions(outcome);
+
+        CREATE TRIGGER IF NOT EXISTS trg_sessions_updated
+            AFTER UPDATE ON sessions
+            FOR EACH ROW
+            BEGIN
+                UPDATE sessions
+                SET updated_at = (unixepoch() * 1000)
+                WHERE id = OLD.id;
+            END;
     `);
 
     // days table
@@ -54,11 +65,22 @@ export function initDb() {
         CREATE TABLE IF NOT EXISTS dailies (
             id INTEGER PRIMARY KEY,
             date DATE NOT NULL UNIQUE,
-            work_done TEXT,
-            impact INTEGER NOT NULL,
-            memorable TEXT,
-            motivation TEXT
+            focus INTEGER NOT NULL,
+            explanation TEXT,
+            tasks TEXT,
+            tool TEXT,
+            created_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000),
+            updated_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000)
         );
+
+        CREATE TRIGGER IF NOT EXISTS trg_dailies_updated
+            AFTER UPDATE ON dailies
+            FOR EACH ROW
+            BEGIN
+                UPDATE dailies
+                SET updated_at = (unixepoch() * 1000)
+                WHERE id = OLD.id;
+            END;
     `);
 
     return db;

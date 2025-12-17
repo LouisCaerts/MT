@@ -85,3 +85,7 @@
 #dailySubmitButton:active {
     background-color: var(--color-theme-normal);
 }
+
+.errorreason {
+    color: var(--color-theme-black)
+}

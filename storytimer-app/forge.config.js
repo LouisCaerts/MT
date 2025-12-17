@@ -1,9 +1,13 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const { AutoUnpackNativesPlugin } = require('@electron-forge/plugin-auto-unpack-natives');
 
-module.exports = {
+module.exports = {  
   packagerConfig: {
     asar: true,
+    ignore: [
+        /node_modules\/(?!(better-sqlite3|bindings|file-uri-to-path)\/)/,
+    ],
   },
   rebuildConfig: {},
   makers: [

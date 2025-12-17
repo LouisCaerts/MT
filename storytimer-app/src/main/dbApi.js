@@ -90,13 +90,13 @@ export function buildDataApi(db) {
 
     // dailies
     const insertDaily = db.prepare(`
-        INSERT INTO dailies (date, work_done, impact, memorable, motivation)
-        VALUES (@date, @work_done, @impact, @memorable, @motivation)
+        INSERT INTO dailies (date, focus, explanation, tasks, tool)
+        VALUES (@date, @focus, @explanation, @tasks, @tool)
         ON CONFLICT(date) DO UPDATE SET
-            work_done  = excluded.work_done,
-            impact     = excluded.impact,
-            memorable  = excluded.memorable,
-            motivation = excluded.motivation
+            focus       = excluded.focus,
+            explanation = excluded.explanation,
+            tasks       = excluded.tasks,
+            tool        = excluded.tool
     `);
 
     const getDailyByDate = db.prepare(`
@@ -114,10 +114,10 @@ export function buildDataApi(db) {
     const patchDailyByDate = db.prepare(`
         UPDATE dailies
         SET
-            work_done  = COALESCE(@work_done, work_done),
-            impact     = COALESCE(@impact, impact),
-            memorable  = COALESCE(@memorable, memorable),
-            motivation = COALESCE(@motivation, motivation)
+            focus      = COALESCE(@focus, focus),
+            explanation = COALESCE(@explanation, explanation),
+            tasks      = COALESCE(@tasks, tasks),
+            tool       = COALESCE(@tool, tool)
         WHERE date = @date
     `);
 
@@ -223,16 +223,16 @@ export function buildDataApi(db) {
         },
 
         // dailies
-        setDaily({ date, work_done, impact, memorable, motivation }) {
+        setDaily({ date, focus, explanation, tasks, tool }) {
             if (!date) throw new Error('setDaily: date is required');
-            if (impact == null) throw new Error('setDaily: impact is required');
+            if (focus == null) throw new Error('setDaily: focus is required');
 
             insertDaily.run({
                 date,
-                work_done: work_done ?? null,
-                impact: Math.round(impact),
-                memorable: memorable ?? null,
-                motivation: motivation ?? null,
+                focus: Math.round(focus),
+                explanation: explanation ?? null,
+                tasks: tasks ?? null,
+                tool: tool ?? null,
             });
 
             return getDailyByDate.get(date);
@@ -243,10 +243,10 @@ export function buildDataApi(db) {
 
             patchDailyByDate.run({
                 date,
-                work_done: patch.work_done,
-                impact: patch.impact,
-                memorable: patch.memorable,
-                motivation: patch.motivation,
+                focus: patch.focus,
+                explanation: patch.explanation,
+                tasks: patch.tasks,
+                tool: patch.tool,
             });
 
             return getDailyByDate.get(date);
