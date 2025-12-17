@@ -14,6 +14,7 @@ let mainWindow      = null;
 let mainTray        = null;
 let armedTimer      = null;
 let armedDeadline   = null;
+let isQuitting 		= false;
 
 // definitions
 const gotTheLock = app.requestSingleInstanceLock()
@@ -41,6 +42,19 @@ else {
 			mainWindow.focus();
 		}
 	})
+
+	// macOS: re-open app when dock icon is clicked
+	app.on("activate", () => {
+		if (!mainWindow) return;
+
+		if (mainWindow.isMinimized()) mainWindow.restore();
+		mainWindow.show();
+		mainWindow.focus();
+	});
+
+	app.on("before-quit", () => {
+		isQuitting = true;
+	});
 
   	const createWindow = () => {
 
@@ -82,9 +96,11 @@ else {
 		}
 
 		// hide app on closing instead of fully exiting
-		mainWindow.on('close', (event) => {
-			event.preventDefault();
-			mainWindow.hide();
+		mainWindow.on("close", (event) => {
+			if (process.platform === "darwin" && !isQuitting) {
+				event.preventDefault();
+				mainWindow.hide();
+			}
 		});
 
 		// open devtools alongside app (development mode only)
@@ -93,12 +109,8 @@ else {
 		// setup tray icon and context menu
 		const contextMenu = Menu.buildFromTemplate([
 			{
-				label: 'Open', 
-				click: () => { mainWindow.show(); }
-			},
-			{
 				label: 'Exit', 
-				click: () => { app.exit(); }
+				click: () => { isQuitting = true; app.quit(); }
 			}
 		]);
 		mainTray = new Tray(mainTrayIcon);
@@ -106,11 +118,10 @@ else {
 		mainTray.setContextMenu(contextMenu);
 	
 		// enable app reopening by double-clicking tray icon
-		mainTray.on('double-click', () => {
-			mainWindow.setBounds({ x, y, width: appWindowWidth, height: appWindowHeight });
-			if (mainWindow.isMinimized()) mainWindow.restore();
-			mainWindow.show();
-			mainWindow.focus();
+		mainTray.on("click", () => {
+			if (!mainWindow) return;
+			if (mainWindow.isVisible()) mainWindow.hide();
+			else { mainWindow.show(); mainWindow.focus(); }
 		});
   	};
 
