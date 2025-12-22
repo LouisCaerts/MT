@@ -9,6 +9,8 @@ import Session from "../routes/Session.jsx";
 import Testing from "../routes/Testing.jsx";
 import TestingTwo from "../routes/Story.jsx";
 import Daily from '../routes/Daily.jsx';
+import Goalsetter from '../components/Goalsetter.jsx';
+import Intro from '../routes/Intro.jsx'
 
 // components
 import Titlebar from '../components/Titlebar.jsx';
@@ -37,6 +39,8 @@ const App = () =>{
                     <Route path="/preferences" element={<Preferences />} />
                     <Route path="/testing" element={<Testing />} />
                     <Route path="/daily" element={<Daily />} />
+                    <Route path="/goal" element={<Goalsetter />} />
+                    <Route path="/intro" element={<Intro />} />
                     <Route path="/testingtwo" element={<TestingTwo scriptId="test" onDone={(flags)=>{/* ... */}} />} />
                     <Route path="/story_day_1" element={<TestingTwo scriptId="day_1" onDone={(flags)=>{/* ... */}} />} />
                     <Route path="/story_day_2" element={<TestingTwo scriptId="day_2" onDone={(flags)=>{/* ... */}} />} />

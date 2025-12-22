@@ -1,0 +1,9 @@
+#birbContainer {
+    margin: 0;
+}
+
+#birb {
+    width: 130px;
+    height: auto;
+    margin-top: 20px;
+}

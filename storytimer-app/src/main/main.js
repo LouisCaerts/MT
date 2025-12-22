@@ -206,6 +206,9 @@ else {
 	ipcMain.handle('day:setGoal', (_e, payload) => api.setDayGoal(payload));
 	ipcMain.handle('day:getMinutes', (_e, payload) => api.getFocusedMinutes(payload));
 	ipcMain.handle('day:get', (_e, payload) => api.getDay(payload));
+	ipcMain.handle('day:setFirst', (_e, payload) => api.setFirstSessionDone(payload));
+	ipcMain.handle('day:setGoalReached', (_e, { date, goal_reached }) => api.setGoalReached({ date, goal_reached }));
+	ipcMain.handle('day:setSurveyTaken', (_e, { date, survey_taken }) => api.setSurveyTaken({ date, survey_taken }));
 	ipcMain.handle('daily:get', (_e, date) => api.getDaily(date));
 	ipcMain.handle('daily:getAll', () => api.getDailies());
 	ipcMain.handle('daily:set', (_e, date, values) => api.setDaily({ date, ...values }));
@@ -213,6 +216,9 @@ else {
 
 	// launch app when ready
 	app.whenReady().then(() => {
+		app.setLoginItemSettings({
+			openAtLogin: true,
+		});
 		createWindow();
 	});
 }

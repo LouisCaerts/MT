@@ -13,8 +13,8 @@
 }
 
 #badgeCircle {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border: 2px solid var(--color-theme-black);
     border-radius: 50%;
     display: flex;
@@ -33,6 +33,6 @@
 
 #badgeLabel {
     font-weight: 500;
-    font-size: medium;
+    font-size: 15px;
     margin: 3px;
 }

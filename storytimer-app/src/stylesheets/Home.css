@@ -1,3 +1,11 @@
+.fader {
+    animation: pageFadeIn 1000ms ease-out;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 #sidebarsContainer {
   height: 100%;
 }
@@ -5,8 +13,8 @@
 #rightbarContainer {
   position: absolute;
   /* put absolute position in bottom left corner */
-  bottom: 15px;
-  right: 15px;
+  bottom: 0px;
+  right: 10px;
 }
 
 #homeContainer {
@@ -17,11 +25,11 @@
     margin-top: 20px;
     flex: 2;
     height: 100%;
-    gap: 55px;
+    gap: 25px;
 }
 
 #dailyprogressbargap {
-  height: 60px;
+  height: 50px;
 }
 
 .toast {
@@ -76,13 +84,14 @@
 }
 
 #dayCountDisplay {
-  text-align: end;
+  text-align: start;
   margin-right: 5px;
+  margin-top: 8px;
 }
 
 #dayCountNumber {
-  font-size: 10px;
-  margin: 0;
+  font-size: 12px;
+  margin-top: 5px;
   font-weight: bold;
   color: var(--color-theme-black);
 }
@@ -99,8 +108,103 @@
 
 .daily-checklist > p > span {
   margin-right: 5px;
+  font-size: 13px;;
+}
+
+.daily-checklist > p {
+  font-size: 13px;
+  color: var(--color-theme-black);
+  margin: 0;
+}
+
+.daily-checklist > h2 {
+  font-size: 18px;
+  color: var(--color-theme-black);
 }
 
 #tasktwo {
   margin-top: 6px;
+}
+
+/* Your existing positioning stays the same */
+.birbSpeech {
+  position: absolute;
+  bottom: 180px;
+  left: 25%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
+/* Move all the visual styling to the inner wrapper */
+#birbSpeechInner {
+  width: 150px;
+  padding: 16px 18px;
+
+  background: var(--color-theme-secondary);
+  color: #222;
+  border-radius: 14px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  font-size: 0.95rem;
+  line-height: 1.4;
+
+  /* bob animation */
+  animation: birbBob 1.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Tail should follow the same background color */
+#birbSpeechInner::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 68%;
+  transform: translateX(-50%);
+
+  width: 0;
+  height: 0;
+
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--color-theme-secondary);
+}
+
+/* Make sure the inner wrapper can position the tail */
+.birbSpeechInner {
+  position: relative;
+}
+
+/* Text inside */
+#birbSpeechText {
+  font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+/* The bob keyframes */
+@keyframes birbBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Respect reduced motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .birbSpeechInner {
+    animation: none;
+  }
+}
+
+/* birb mood row */
+.birbMoodRow2 {
+  display: flex;
+  justify-content: center;;
+}
+
+.birbPortrait2 {
+  width: 50px;
+  height: auto;
+  border-radius: 999px;
+  border: 1px solid var(--color-theme-grey);
+  margin-bottom:10px;
 }

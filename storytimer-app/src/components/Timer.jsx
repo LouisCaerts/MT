@@ -210,7 +210,7 @@ export default function Timer({ duration = 90,  autoStart = true, onComplete })
     const dashOffset = circumference * (1 - remainingFrac);
 
     return (
-        <div className="timerContainer">
+        <div className="timerContainer fader">
             <div className="timerRingWrapper">
                 <svg className="timerRingSvg" width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
                     <circle cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={radius} className="timerRingTrack" strokeWidth={RING_STROKE} />

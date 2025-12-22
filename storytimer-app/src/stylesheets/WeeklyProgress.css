@@ -1,8 +1,8 @@
 #progressContainer {
     display: flex;
     flex-direction: row;
-    width:55%;
+    width:50%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 10px;
 }

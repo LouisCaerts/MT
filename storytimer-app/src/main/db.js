@@ -56,7 +56,12 @@ export function initDb() {
             id INTEGER PRIMARY KEY,
             date DATE NOT NULL UNIQUE,
             goal_min INTEGER NOT NULL,
-            focused_min INTEGER NOT NULL
+            focused_min INTEGER NOT NULL,
+            first_session_done BOOLEAN NOT NULL DEFAULT FALSE,
+            goal_reached BOOLEAN NOT NULL DEFAULT FALSE,
+            survey_taken BOOLEAN NOT NULL DEFAULT FALSE,
+            created_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000),
+            updated_at INTEGER NOT NULL DEFAULT (unixepoch() * 1000)
         );
     `);
 
