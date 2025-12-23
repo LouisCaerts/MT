@@ -1,5 +1,7 @@
 import '../stylesheets/DailyForm.css';
 
+import { TRIGGERS, getBirbReaction } from "../main/reactions.js";
+
 import { useEffect, useState } from 'react';
 import { DailyAPI, DaysAPI } from '../main/api.js';
 import { useNavigate, Link } from "react-router-dom";
@@ -21,6 +23,12 @@ export default function DailyForm() {
 
     const [allowed, setAllowed] = useState(false);
     const [blockedReason, setBlockedReason] = useState(null);
+    
+	const [birbReaction, setBirbReaction] = useState(getBirbReaction({
+														trigger: TRIGGERS.REFLECTION_COMPLETED,
+														goalMin: 0,
+														focusedMin: 0,
+													}).text);
 
     // Load existing survey for today (if any) so users can edit
     useEffect(() => {
@@ -92,8 +100,8 @@ export default function DailyForm() {
         try {
             setSaving(true);
             await DailyAPI.set(todayKey, payload);
-            // after save, go back home or wherever is appropriate
-            navigate('/home');
+			//navigate("/home", { state: { reaction: birbReaction } });
+			navigate("/home");
         } catch (err) {
             console.error('Failed to save daily survey', err);
             setError('Something went wrong while saving. Please try again.');
@@ -104,7 +112,7 @@ export default function DailyForm() {
 
     if (loading) {
         return (
-            <div id="dailyFormContainer">
+            <div id="dailyFormContainer" className='fader'>
                 <h2>Daily Reflection</h2>
                 <p>Loading...</p>
             </div>
@@ -113,7 +121,7 @@ export default function DailyForm() {
 
     if (loading) {
         return (
-            <div id="dailyFormContainer">
+            <div id="dailyFormContainer" className='fader'>
                 <h2>Daily Reflection</h2>
                 <p class="errorreason">Loading...</p>
             </div>
@@ -122,7 +130,7 @@ export default function DailyForm() {
 
     if (!allowed) {
         return (
-            <div id="dailyFormContainer">
+            <div id="dailyFormContainer" className='fader'>
                 <h2>Daily Reflection</h2>
                 <p class="errorreason">{blockedReason}</p>
                 <Link to="/home" className="daily-back-link">
@@ -133,7 +141,7 @@ export default function DailyForm() {
     }
 
     return (
-        <div id="dailyFormContainer">
+        <div id="dailyFormContainer" className='fader'>
             <h2>Daily Reflection</h2>
 
             <form id="dailyForm" onSubmit={handleSave}>

@@ -58,6 +58,12 @@ contextBridge.exposeInMainWorld('days', {
 		ipcRenderer.invoke('day:getMinutes', { date }),
 	get: ( date ) => 
 		ipcRenderer.invoke('day:get', date),
+	setFirst: ({ date, first_session_done }) =>
+		ipcRenderer.invoke('day:setFirst', { date, first_session_done }),
+	setGoalReached: ({ date, goal_reached }) =>
+		ipcRenderer.invoke('day:setGoalReached', { date, goal_reached }),
+	setSurveyTaken: ({ date, survey_taken }) =>
+		ipcRenderer.invoke('day:setSurveyTaken', { date, survey_taken }),
 });
 
 contextBridge.exposeInMainWorld('daily', {

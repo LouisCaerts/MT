@@ -6,11 +6,14 @@ export const PreferencesAPI = {
 };
 
 export const DaysAPI = {
-    ensure:   ({ date, goal_min }) => window.days.ensure({ date, goal_min }),
-    addFocus: ({ date, minutes })  => window.days.addFocus({ date, minutes }),
-    list:     ()                   => window.days.list(),
-    setGoal:  ({ date, goal_min }) => window.days.setGoal({ date, goal_min }),
-    get:      ( date )             => window.days.get( date ),
+    ensure:   ({ date, goal_min })              => window.days.ensure({ date, goal_min }),
+    addFocus: ({ date, minutes })               => window.days.addFocus({ date, minutes }),
+    list:     ()                                => window.days.list(),
+    setGoal:  ({ date, goal_min })              => window.days.setGoal({ date, goal_min }),
+    get:      ( date )                          => window.days.get( date ),
+    setFirst: ({ date, first_session_done })    => window.days.setFirst({ date, first_session_done }),
+    setGoalReached: ({ date, goal_reached })  => window.days.setGoalReached({ date, goal_reached }),
+    setSurveyTaken: ({ date, survey_taken })  => window.days.setSurveyTaken({ date, survey_taken }),
 };
 
 export const SurveysAPI = {

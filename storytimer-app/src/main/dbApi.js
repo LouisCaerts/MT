@@ -31,6 +31,24 @@ export function buildDataApi(db) {
         WHERE date = @date
     `);
 
+    const setFirstSessionDone = db.prepare(`
+        UPDATE days
+        SET first_session_done = @done
+        WHERE date = @date
+    `);
+
+    const setGoalReached = db.prepare(`
+        UPDATE days
+        SET goal_reached = @reached
+        WHERE date = @date
+    `);
+
+    const setSurveyTaken = db.prepare(`
+        UPDATE days
+        SET survey_taken = @taken
+        WHERE date = @date
+    `);
+
     const setDayGoalByDate = db.prepare(`
         UPDATE days
         SET goal_min = @goal_min
@@ -176,6 +194,24 @@ export function buildDataApi(db) {
             const row = getFocusedMinutesForDay.get(date);
 
             return row?.focused_min ?? 0;
+        },
+        setFirstSessionDone({ date, first_session_done }) {
+            if (!date) throw new Error('setFirstSessionDone: date is required');
+            const done = first_session_done ? 1 : 0;
+            setFirstSessionDone.run({ date, done });
+            return getDayByDate.get(date);
+        },
+        setGoalReached({ date, goal_reached }) {
+            if (!date) throw new Error('setGoalReached: date is required');
+            const reached = goal_reached ? 1 : 0;
+            setGoalReached.run({ date, reached });
+            return getDayByDate.get(date);
+        },
+        setSurveyTaken({ date, survey_taken }) {
+            if (!date) throw new Error('setSurveyTaken: date is required');
+            const taken = survey_taken ? 1 : 0;
+            setSurveyTaken.run({ date, taken });
+            return getDayByDate.get(date);
         },
 
         // sessions

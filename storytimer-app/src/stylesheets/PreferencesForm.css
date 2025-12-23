@@ -2,6 +2,14 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+.fader {
+    animation: pageFadeIn 1000ms ease-out;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 #preferencesFormContainer {
     height: 100vh;
     overflow-y: auto;     /* enables scrolling */
@@ -20,6 +28,7 @@
     font-weight: bold;
     margin-left: 70px;
     margin-right: 70px;
+    margin-top: 50px;
 }
 
 #preferencesFormLabelsContainer {
