@@ -85,17 +85,20 @@ export default function Intro({ }) {
                 const last = usedDays[0];
 
                 if (last) {
+                    console.log(last.focused_min >= 30);
                     setLastGoal(last.goal_min);
                     setLastFocus(last.focused_min);
+                    if (last.focused < 30) {
+                        setBirbMood("sad");
+                        setBirbReaction(`${last.focused_min} minutes was your last focus time... I believe you can do better! 🐤🌱`);
+                    }
+                    if (last.focused_min >= 30 && last.focused_min < 120) {
+                        setBirbMood("neutral");
+                        setBirbReaction(`Last time you focused for ${last.focused_min} minutes. Let's do our best to beat that! 🐣☀️`);
+                    }
                     if (last.focused_min >= 120) {
                         setBirbMood("happy");
                         setBirbReaction(`Last time you were amazing! You worked ${last.focused_min} whole minutes! Let's work hard again! 💪🤩`);
-                    } else if (last.focus_min >= 30) {
-                        setBirbMood("neutral");
-                        setBirbReaction(`Last time you focused for ${last.focused_min} minutes. Let's do our best to beat that! 🐣☀️`);
-                    } else {
-                        setBirbMood("sad");
-                        setBirbReaction(`${last.focused_min} minutes was your last focus time... I believe you can do better! 🐤🌱`);
                     }
                 }
             } catch (err) {
