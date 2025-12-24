@@ -88,7 +88,7 @@ export default function Intro({ }) {
                     console.log(last.focused_min >= 30);
                     setLastGoal(last.goal_min);
                     setLastFocus(last.focused_min);
-                    if (last.focused < 30) {
+                    if (last.focused_min < 30) {
                         setBirbMood("sad");
                         setBirbReaction(`${last.focused_min} minutes was your last focus time... I believe you can do better! 🐤🌱`);
                     }
