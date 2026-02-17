@@ -18,7 +18,7 @@ const addDays = (d, n) => {
 };
 const startOfWeekMonday = (d = new Date()) => {
   const day = d.getDay();
-  const diff = (day + 6) % 7; // 0->6, 1->0, ..., 6->5
+  const diff = (day + 6) % 7;
   const monday = addDays(d, -diff);
   monday.setHours(0, 0, 0, 0);
   return monday;
@@ -59,33 +59,25 @@ export default function WeeklyProgress({ day = "???" }) {
 
     const loadStars = async () => {
       try {
-        // 1) Compute Monday 00:00 for the current local week
         const monday = startOfWeekMonday(new Date());
 
-        // 2) Load all day rows from the DB
-        //    window.days is exposed in preload.js
         const allDays = await window.days.list();
 
-        // Build a map date -> row for fast lookup
         const dayByDate = {};
         for (const row of allDays) {
-          // row has: { id, date, goal_min, focused_min }
           dayByDate[row.date] = row;
         }
 
-        // 3) For each weekday, look up that calendar date in the map
         const results = {};
 
         for (let i = 0; i < ORDER.length; i++) {
           const { key } = ORDER[i];
 
-          // Calendar date for this weekday
           const dateObj = addDays(monday, i);
           const dateStr = toISODate(dateObj);
 
           const row = dayByDate[dateStr];
 
-          // If no row exists for that day yet -> no star
           const hit = row ? (row.focused_min >= row.goal_min) : false;
 
           results[key] = !!hit;
@@ -105,7 +97,6 @@ export default function WeeklyProgress({ day = "???" }) {
 
     loadStars();
 
-    // Re-arm at midnight so tomorrow's day gets picked up
     const arm = () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       const ms = Math.max(0, nextMidnight() - new Date());

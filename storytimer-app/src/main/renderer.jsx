@@ -28,8 +28,8 @@ const App = () =>{
                 style={{
                     display: "flex",
                     flexDirection: "column",
-                    height: "100%",      // full window height
-                    overflow: "hidden",   // no scrollbars
+                    height: "100%",
+                    overflow: "hidden",
                 }}
             >
                 <Routes>

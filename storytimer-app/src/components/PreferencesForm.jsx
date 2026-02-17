@@ -48,8 +48,6 @@ export default function PreferencesForm() {
 
         // Save preferences
         await PreferencesAPI.update(patch);
-
-        // Navigate back home
         navigate("/home", { state: { toast: "Preferences saved successfully!" } });
     }
 

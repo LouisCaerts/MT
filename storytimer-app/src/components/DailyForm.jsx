@@ -9,8 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 export default function DailyForm() {
     const navigate = useNavigate();
 
-    // use ISO date string as key, same as days table likely uses
-    const todayKey = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+    const todayKey = new Date().toISOString().slice(0, 10);
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -30,13 +29,11 @@ export default function DailyForm() {
 														focusedMin: 0,
 													}).text);
 
-    // Load existing survey for today (if any) so users can edit
     useEffect(() => {
         let cancelled = false;
 
         async function load() {
             try {
-                // --- time gate ---
                 const now = new Date();
                 const hour = now.getHours();
                 if (hour < 11 || hour > 23) {
@@ -44,7 +41,6 @@ export default function DailyForm() {
                     return;
                 }
 
-                // --- DB gate: focused minutes ---
                 const day = await DaysAPI.get(todayKey);
                 const focusedMin = day?.focused_min ?? 0;
 
@@ -53,7 +49,6 @@ export default function DailyForm() {
                     return;
                 }
 
-                // --- load existing survey ---
                 const existing = await DailyAPI.get(todayKey);
                 if (!existing || cancelled) {
                     setAllowed(true);
@@ -82,7 +77,6 @@ export default function DailyForm() {
         e.preventDefault();
         setError(null);
 
-        // simple guard: focus is required by form, but double-check
         if (!focus) {
             setError('Please select how the app affected your work today.');
             return;
@@ -100,7 +94,6 @@ export default function DailyForm() {
         try {
             setSaving(true);
             await DailyAPI.set(todayKey, payload);
-			//navigate("/home", { state: { reaction: birbReaction } });
 			navigate("/home");
         } catch (err) {
             console.error('Failed to save daily survey', err);

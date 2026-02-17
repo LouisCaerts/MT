@@ -14,20 +14,14 @@ const todayISO = () => {
 
 export default function Timer({ duration = 90,  autoStart = true, onComplete }) 
 {
-    // states
     const [isRunning, setIsRunning] = useState(autoStart);
     const [timeLeft, setTimeLeft]   = useState(duration * 1000);
-
-    // declarations
     const startRef          = useRef(null);
     const pausedStartRef    = useRef(null);
     const pausedMsRef       = useRef(0);
+    const sessionIdRef      = useRef(null);
+    const finishedRef       = useRef(false);
 
-    // session bookkeeping
-    const sessionIdRef      = useRef(null);   // active DB session id
-    const finishedRef       = useRef(false);  // prevent double finish
-
-    // calculate remaining time on timer
     const computeTimeLeft = (now) => {
         if (startRef.current == null) return (duration * 1000);
         const base = now ?? performance.now();
@@ -60,16 +54,14 @@ export default function Timer({ duration = 90,  autoStart = true, onComplete })
             const activeMs = getActiveMs(); // excludes pauses
             const actualSec = Math.round(activeMs / 1000);
 
-            // 1) finish the session in the sessions table
             await window.sessions.finish({
                 id: sessionIdRef.current,
                 outcome,
                 duration_actual_sec: actualSec,
             });
 
-            // 2) if the session was COMPLETED, add its focused time to today's day row
             if (outcome === 'completed' && actualSec > 0 && window.days?.addFocus) {
-                const minutes = actualSec / 60; // days.focused_min is in minutes
+                const minutes = actualSec / 60;
                 const date = todayISO();
 
                 try {
@@ -133,7 +125,7 @@ export default function Timer({ duration = 90,  autoStart = true, onComplete })
     useEffect(() => {
         return () => {
             if (sessionIdRef.current && !finishedRef.current) {
-                window.sessions.finish({ id: sessionIdRef.current, outcome: 'crash' })  // fire-and-forget; cannot await in unmount
+                window.sessions.finish({ id: sessionIdRef.current, outcome: 'crash' })
                   .catch(err => console.error('finish crash failed', err));
                 sessionIdRef.current = null;
                 finishedRef.current = true;

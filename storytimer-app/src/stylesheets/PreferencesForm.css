@@ -12,8 +12,8 @@
 
 #preferencesFormContainer {
     height: 100vh;
-    overflow-y: auto;     /* enables scrolling */
-    padding-bottom: 80px; /* space so the bottom buttons aren’t covered */
+    overflow-y: auto;
+    padding-bottom: 80px;
 }
 
 #preferencesFormTitle {

@@ -2,16 +2,15 @@
 .storyContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;         /* center horizontally */
+  align-items: center;
   width: 100%;
-  height: 100%;                /* fills the routed area below your titlebar */
-  min-height: 0;               /* allow child flexboxes to shrink */
-  overflow: hidden;            /* guard against tiny overflow */
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
   color: var(--color-theme-black, #111);
   box-sizing: border-box;
 }
 
-/* Avoid margin-collapsing / phantom height from default element margins */
 .storyContainer p,
 .storyContainer h1,
 .storyContainer h2,
@@ -24,8 +23,8 @@
 
 /* -------- Title (top) -------- */
 .storyTitle {
-  flex: 0 0 auto;              /* only take the space it needs */
-  padding-top: 8px;            /* use padding instead of margin */
+  flex: 0 0 auto;
+  padding-top: 8px;
   text-align: center;
   font-size: 20px;
   text-transform: uppercase;
@@ -36,15 +35,15 @@
 
 /* -------- Frame (fills remaining space, docks content to bottom) -------- */
 .storyFrame {
-  flex: 1 1 0;                 /* take exactly the leftover space */
-  min-height: 0;               /* CRUCIAL: allows shrinking in flex layouts */
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 24px 24px;        /* inner spacing that won’t grow outer height */
+  padding: 0 24px 24px;
   box-sizing: border-box;
-  overflow: hidden;            /* keep internals from creating scrollbars */
+  overflow: hidden;
 }
 
 /* -------- Dialogue row (bottom) -------- */
@@ -70,12 +69,12 @@
     margin-top: 50%;
     border-radius: 9999px;
     object-fit: cover;
-    background-color: rgba(255, 255, 0, 0.15); /* placeholder tint; optional */
+    background-color: rgba(255, 255, 0, 0.15);
 }
 
 .storyBubble { 
     max-width: 90%; 
-    flex: 1 1 0;                 /* take exactly the leftover space */
+    flex: 1 1 0;
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -85,7 +84,7 @@
 .storyBubbleName {
   font-size: 20px;
   color: var(--color-theme-dark, #222);
-  margin: 0 0 6px 6px;         /* spacing within the bubble column */
+  margin: 0 0 6px 6px;
 }
 .storyBubbleNameRight{
     display: flex;
@@ -102,7 +101,7 @@
   padding: 14px 16px;
   border-radius: 16px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-  overflow-wrap: anywhere;     /* safe wrapping for long unbroken text */
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 
@@ -111,7 +110,7 @@
 
 .storyBubbleText {
   line-height: 1.55;
-  margin: 0;                   /* prevent default p-margin from affecting height */
+  margin: 0;
 }
 
 /* -------- Choices (also bottom-docked) -------- */
@@ -140,7 +139,7 @@
 }
 
 .storyChoiceBtn {
-  all: unset;                  /* icon/button reset */
+  all: unset;
   display: block;
   width: 100%;
   padding: 10px 12px;
@@ -161,21 +160,21 @@
 
 /* -------- Bottom-right “Next” icon (hidden on choice nodes) -------- */
 .storyNextContainer {
-  margin-top: auto;            /* pushes this row to the bottom of .storyFrame */
+  margin-top: auto;
   display: flex;
-  justify-content: flex-end;   /* right-align the icon */
+  justify-content: flex-end;
   width: 100%;
   margin-top: 12px;
   box-sizing: border-box;
 }
 
 .storyNextButton {
-  all: unset;                  /* no default button styles */
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 6px;                /* maintain a11y click target */
+  padding: 6px;
   border-radius: 50%;
   color: var(--color-theme-dark, #222);
   transition: transform 0.1s ease, color 0.2s ease;

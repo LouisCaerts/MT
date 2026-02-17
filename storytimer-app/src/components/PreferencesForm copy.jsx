@@ -89,7 +89,7 @@ export default function PreferencesForm() {
 
         // 2) Update today's day row goal if applicable
         try {
-            const todayKey = getTodayGoalKey(); // e.g. "monGoal"
+            const todayKey = getTodayGoalKey();
             const todaysGoal = patch[todayKey];
 
             if (typeof todaysGoal === 'number') {
